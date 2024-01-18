@@ -1,0 +1,34 @@
+ this.imageProfile,
+    this.name,
+    this.age,
+    this.phoneNo,
+    this.city,
+    this.country,
+    this.profileHeading,
+    this.lookingForInaPartner,
+    this.publishedDateTime,
+
+    // Appearance
+    this.height,
+    this.weight,
+    this.bodyType,
+
+    //Life Style
+    this.drink,
+    this.smoke,
+    this.maritalStatus,
+    this.haveChildren,
+    this.noOfChildren,
+    this.profession,
+    this.employmentStatus,
+    this.income,
+    this.livingSituation,
+    this.willingToRelocate,
+    this.relationshipYouAreLookingFor,
+
+    //Background and Cultural Values
+    this.nationality,
+    this.education,
+    this.languageSpoken,
+    this.religion,
+    this.ethnicity,

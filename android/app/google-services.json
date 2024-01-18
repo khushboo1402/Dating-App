@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "821576563890",
+    "project_id": "siimple-dating-app",
+    "storage_bucket": "siimple-dating-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:821576563890:android:d8f5dc71b5f7ff4c7d9dab",
+        "android_client_info": {
+          "package_name": "com.example.chat_app_codingcafe"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCucDXYF2lPb-VUSyojJu0MZYDy0Nlvjng"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
