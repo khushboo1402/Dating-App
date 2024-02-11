@@ -1,8 +1,10 @@
-import 'package:chat_app_codingcafe/tabScreens/favourite_sent_favourite_received_screen.dart';
-import 'package:chat_app_codingcafe/tabScreens/like_sent_like_received_screen.dart';
-import 'package:chat_app_codingcafe/tabScreens/swiping_screen.dart';
-import 'package:chat_app_codingcafe/tabScreens/user_details_screen.dart';
-import 'package:chat_app_codingcafe/tabScreens/view_sent_view_received_screen.dart';
+import 'package:siimple/pushNotificationSystem/push_notification_system.dart';
+import 'package:siimple/tabScreens/favourite_sent_favourite_received_screen.dart';
+import 'package:siimple/tabScreens/like_sent_like_received_screen.dart';
+import 'package:siimple/tabScreens/swiping_screen.dart';
+import 'package:siimple/tabScreens/user_details_screen.dart';
+import 'package:siimple/tabScreens/view_sent_view_received_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,8 +21,19 @@ class _HomeScreenState extends State<HomeScreen> {
     ViewSentViewReceivedScreen(),
     FavouriteSentFavouriteReceivedScreen(),
     LikeSentLikeReceivedScreen(),
-    UserDetailsScreen()
+    UserDetailsScreen(
+      userID: FirebaseAuth.instance.currentUser!.uid,
+    ),
   ];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    PushNotificationSystem notificationSystem = PushNotificationSystem();
+    notificationSystem.generateDeviceRegistrationToken();
+    notificationSystem.whenNotificationReceived(context);
+  }
 
   @override
   Widget build(BuildContext context) {

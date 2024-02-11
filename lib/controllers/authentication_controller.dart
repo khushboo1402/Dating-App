@@ -1,13 +1,13 @@
 import 'dart:io';
 
-import 'package:chat_app_codingcafe/authenticationScreen/login_screen.dart';
-import 'package:chat_app_codingcafe/homeScreen/home_screen.dart';
+import 'package:siimple/authenticationScreen/login_screen.dart';
+import 'package:siimple/homeScreen/home_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:chat_app_codingcafe/models/person.dart' as personModel;
+import 'package:siimple/models/person.dart' as personModel;
 
 class AuthenticationController extends GetxController {
   static AuthenticationController authController = Get.find();
@@ -61,6 +61,7 @@ class AuthenticationController extends GetxController {
     String email,
     String password,
     String age,
+    String gender,
     String phoneNo,
     String city,
     String country,
@@ -110,6 +111,7 @@ class AuthenticationController extends GetxController {
           email: email,
           password: password,
           age: int.parse(age),
+          gender: gender.toLowerCase(),
           phoneNo: phoneNo,
           city: city,
           country: country,

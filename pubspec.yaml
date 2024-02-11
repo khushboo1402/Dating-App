@@ -1,4 +1,4 @@
-name: chat_app_codingcafe
+name: siimple
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -34,14 +34,20 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
+  cupertino_icons:
   get:
   image_picker:
-  firebase_core: ^2.24.2
+  firebase_core:
   firebase_auth:
   cloud_firestore:
   firebase_storage:
   firebase_messaging:
+  flutter_image_slider:
+  http:
+  permission_handler:
+  change_app_package_name:
+  rename:
+  url_launcher:
 
 
 dev_dependencies:
@@ -54,6 +60,13 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  flutter_launcher_icons: "^0.13.1"
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/logo.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

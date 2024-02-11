@@ -1,6 +1,6 @@
-import 'package:chat_app_codingcafe/authenticationScreen/registration_screen.dart';
-import 'package:chat_app_codingcafe/controllers/authentication_controller.dart';
-import 'package:chat_app_codingcafe/widgets/custom_text_field_widget.dart';
+import 'package:siimple/authenticationScreen/registration_screen.dart';
+import 'package:siimple/controllers/authentication_controller.dart';
+import 'package:siimple/widgets/custom_text_field_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

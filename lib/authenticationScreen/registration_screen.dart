@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:chat_app_codingcafe/controllers/authentication_controller.dart';
-import 'package:chat_app_codingcafe/widgets/custom_text_field_widget.dart';
+import 'package:siimple/controllers/authentication_controller.dart';
+import 'package:siimple/widgets/custom_text_field_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,6 +19,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   TextEditingController passwordTextEditingController = TextEditingController();
   TextEditingController nameTextEditingController = TextEditingController();
   TextEditingController ageTextEditingController = TextEditingController();
+  TextEditingController genderTextEditingController = TextEditingController();
   TextEditingController phoneNoTextEditingController = TextEditingController();
   TextEditingController cityTextEditingController = TextEditingController();
   TextEditingController countryTextEditingController = TextEditingController();
@@ -241,6 +242,23 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   editingController: ageTextEditingController,
                   labelText: "Age",
                   iconData: Icons.numbers,
+                  isObscure: false,
+                ),
+              ),
+
+              const SizedBox(
+                height: 24,
+              ),
+
+              //gender
+              SizedBox(
+                width: MediaQuery.of(context).size.width -
+                    36, //set as per the user screen size
+                height: 55,
+                child: CustomTextFieldWidget(
+                  editingController: genderTextEditingController,
+                  labelText: "Gender",
+                  iconData: Icons.person_pin,
                   isObscure: false,
                 ),
               ),
@@ -721,6 +739,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   .trim()
                                   .isNotEmpty &&
                               ageTextEditingController.text.trim().isNotEmpty &&
+                              genderTextEditingController.text
+                                  .trim()
+                                  .isNotEmpty &&
                               phoneNoTextEditingController.text
                                   .trim()
                                   .isNotEmpty &&
@@ -810,6 +831,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             emailTextEditingController.text.trim(),
                             passwordTextEditingController.text.trim(),
                             ageTextEditingController.text.trim(),
+                            genderTextEditingController.text.trim(),
                             phoneNoTextEditingController.text.trim(),
                             cityTextEditingController.text.trim(),
                             countryTextEditingController.text.trim(),
