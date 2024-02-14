@@ -1,5 +1,7 @@
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:siimple/allScreens/chat_page.dart';
 import 'package:siimple/controllers/profile_controller.dart';
 import 'package:siimple/global.dart';
@@ -179,7 +181,7 @@ class _SwippingScreenState extends State<SwippingScreen> {
   readCurrentUserData() async {
     await FirebaseFirestore.instance
         .collection("Users")
-        .doc(currentuserID)
+        .doc(FirebaseAuth.instance.currentUser!.uid)
         .get()
         .then((dataSnapshot) {
       setState(() {

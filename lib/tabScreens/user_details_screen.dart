@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:siimple/accountSettingsScreen/account_settings_screen.dart';
-import 'package:siimple/global.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -69,7 +68,6 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
       "https://firebasestorage.googleapis.com/v0/b/siimple-dating-app.appspot.com/o/PlaceHolder%2Fprofile_avatar.jpg?alt=media&token=31b75251-8319-4802-8ab6-5b4d3d2025ba";
 
   retrieveUserInfo() async {
-    // debugger();
     await FirebaseFirestore.instance
         .collection("Users")
         .doc(widget.userID)
@@ -145,10 +143,11 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
           ),
         ),
         centerTitle: true,
-        // automaticallyImplyLeading:
-        //     widget.userID == currentuserID ? false : true,
-
-        leading: widget.userID != currentuserID
+        automaticallyImplyLeading:
+            widget.userID == FirebaseAuth.instance.currentUser!.uid
+                ? false
+                : true,
+        leading: widget.userID != FirebaseAuth.instance.currentUser!.uid
             ? IconButton(
                 onPressed: () {
                   Get.back();
@@ -160,7 +159,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
               )
             : Container(),
         actions: [
-          widget.userID == currentuserID
+          widget.userID == FirebaseAuth.instance.currentUser!.uid
               ? Row(
                   children: [
                     IconButton(

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:siimple/authenticationScreen/login_screen.dart';
+import 'package:siimple/global.dart';
 import 'package:siimple/homeScreen/home_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

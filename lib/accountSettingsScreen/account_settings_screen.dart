@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:siimple/global.dart';
 import 'package:siimple/homeScreen/home_screen.dart';
 import 'package:siimple/widgets/custom_text_field_widget.dart';
@@ -141,7 +142,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
   retriveUserData() async {
     await FirebaseFirestore.instance
         .collection("Users")
-        .doc(currentuserID)
+        .doc(FirebaseAuth.instance.currentUser!.uid)
         .get()
         .then((snapshot) {
       if (snapshot.exists) {
@@ -295,7 +296,10 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
         });
     await uploadImages();
 
-    FirebaseFirestore.instance.collection("Users").doc(currentuserID).update({
+    FirebaseFirestore.instance
+        .collection("Users")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update({
       //Personal Data
       'name': name,
       'age': int.parse(age),

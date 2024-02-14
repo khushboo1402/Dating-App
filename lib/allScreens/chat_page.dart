@@ -2,13 +2,14 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:siimple/allConstants/constants.dart';
 import 'package:siimple/allConstants/firestore_constants.dart';
 import 'package:siimple/allModels/message_chat.dart';
-import 'package:siimple/allProviders/auth_provider.dart';
+import 'package:siimple/allProviders/auth_provider.dart' as auth;
 import 'package:siimple/allProviders/chat_provider.dart';
 import 'package:siimple/allProviders/setting_provider.dart';
 import 'package:siimple/allWidgets/loading_view.dart';
@@ -52,7 +53,7 @@ class ChatPageState extends State<ChatPage> {
   String peerId;
   String peerAvatar;
   String peerNickname;
-  // late String currentuserID;
+  // late String FirebaseAuth.instance.currentUser!.uid;
 
   List<QueryDocumentSnapshot> listMessage = new List.from([]);
 
@@ -70,13 +71,13 @@ class ChatPageState extends State<ChatPage> {
   final FocusNode focusNode = FocusNode();
 
   late ChatProvider chatProvider;
-  late AuthProvider authProvider;
+  late auth.AuthProvider authProvider;
 
   @override
   void initState() {
     super.initState();
     chatProvider = context.read<ChatProvider>();
-    authProvider = context.read<AuthProvider>();
+    authProvider = context.read<auth.AuthProvider>();
 
     focusNode.addListener(onFocusChange);
     listScrollController.addListener(_scrollListener);
@@ -102,7 +103,6 @@ class ChatPageState extends State<ChatPage> {
   }
 
   void readLocal() {
-    debugger();
     // if (authProvider.getUserFirebaseId()?.isNotEmpty == true) {
     //   currentUserId = authProvider.getUserFirebaseId()!;
     // } else {
@@ -111,15 +111,15 @@ class ChatPageState extends State<ChatPage> {
     //     (Route<dynamic> route) => false,
     //   );
     // }
-    if (currentuserID.hashCode <= peerId.hashCode) {
-      groupChatId = '$currentuserID-$peerId';
+    if (FirebaseAuth.instance.currentUser!.uid.hashCode <= peerId.hashCode) {
+      groupChatId = '$FirebaseAuth.instance.currentUser!.uid-$peerId';
     } else {
-      groupChatId = '$peerId-$currentuserID';
+      groupChatId = '$peerId-$FirebaseAuth.instance.currentUser!.uid';
     }
 
     chatProvider.updateDataFirestore(
       FirestoreConstants.pathUserCollection,
-      currentuserID,
+      FirebaseAuth.instance.currentUser!.uid,
       {FirestoreConstants.chattingWith: peerId},
     );
   }
@@ -168,8 +168,8 @@ class ChatPageState extends State<ChatPage> {
   void onSendMessage(String content, int type) {
     if (content.trim().isNotEmpty) {
       textEditingController.clear();
-      chatProvider.sendMessage(
-          content, type, groupChatId, currentuserID, peerId);
+      chatProvider.sendMessage(content, type, groupChatId,
+          FirebaseAuth.instance.currentUser!.uid, peerId);
       listScrollController.animateTo(0,
           duration: Duration(milliseconds: 300), curve: Curves.easeOut);
     } else {
@@ -181,7 +181,7 @@ class ChatPageState extends State<ChatPage> {
   bool isLastMessageLeft(int index) {
     if ((index > 0 &&
             listMessage[index - 1].get(FirestoreConstants.idFrom) ==
-                currentuserID) ||
+                FirebaseAuth.instance.currentUser!.uid) ||
         index == 0) {
       return true;
     } else {
@@ -192,7 +192,7 @@ class ChatPageState extends State<ChatPage> {
   bool isLastMessageRight(int index) {
     if ((index > 0 &&
             listMessage[index - 1].get(FirestoreConstants.idFrom) !=
-                currentuserID) ||
+                FirebaseAuth.instance.currentUser!.uid) ||
         index == 0) {
       return true;
     } else {
@@ -208,7 +208,7 @@ class ChatPageState extends State<ChatPage> {
     } else {
       chatProvider.updateDataFirestore(
         FirestoreConstants.pathUserCollection,
-        currentuserID,
+        FirebaseAuth.instance.currentUser!.uid,
         {FirestoreConstants.chattingWith: null},
       );
       Navigator.pop(context);
@@ -463,7 +463,7 @@ class ChatPageState extends State<ChatPage> {
   Widget buildItem(int index, DocumentSnapshot? document) {
     if (document != null) {
       MessageChat messageChat = MessageChat.fromDocument(document);
-      if (messageChat.idFrom == currentuserID) {
+      if (messageChat.idFrom == FirebaseAuth.instance.currentUser!.uid) {
         return Row(
           children: <Widget>[
             messageChat.type == TypeMessage.text

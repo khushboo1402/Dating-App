@@ -13,6 +13,15 @@ class RegistrationScreen extends StatefulWidget {
   State<RegistrationScreen> createState() => _RegistrationScreenState();
 }
 
+var authenticationController = AuthenticationController.authController;
+
+@override
+void initState() {
+  // TODO: implement initState
+  // super.initState();
+  authenticationController.imageFile == null;
+}
+
 class _RegistrationScreenState extends State<RegistrationScreen> {
   //Personal Info
   TextEditingController emailTextEditingController = TextEditingController();
@@ -66,8 +75,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       TextEditingController();
 
   bool showProgressBar = false;
-
-  var authenticationController = AuthenticationController.authController;
 
   @override
   Widget build(BuildContext context) {
@@ -482,40 +489,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 height: 24,
               ),
 
-              //Have Children
-              SizedBox(
-                width: MediaQuery.of(context).size.width -
-                    36, //set as per the user screen size
-                height: 55,
-                child: CustomTextFieldWidget(
-                  editingController: haveChildrenTextEditingController,
-                  labelText: "Do you have children?",
-                  iconData: CupertinoIcons.person_3_fill,
-                  isObscure: false,
-                ),
-              ),
-
-              const SizedBox(
-                height: 24,
-              ),
-
-              //No Of Children
-              SizedBox(
-                width: MediaQuery.of(context).size.width -
-                    36, //set as per the user screen size
-                height: 55,
-                child: CustomTextFieldWidget(
-                  editingController: noOfChildrenTextEditingController,
-                  labelText: "Number of Children (if any)",
-                  iconData: CupertinoIcons.person_3_fill,
-                  isObscure: false,
-                ),
-              ),
-
-              const SizedBox(
-                height: 24,
-              ),
-
               //Profession
               SizedBox(
                 width: MediaQuery.of(context).size.width -
@@ -525,92 +498,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   editingController: professionTextEditingController,
                   labelText: "Profession",
                   iconData: Icons.business_center,
-                  isObscure: false,
-                ),
-              ),
-
-              const SizedBox(
-                height: 24,
-              ),
-
-              //Employment Status
-              SizedBox(
-                width: MediaQuery.of(context).size.width -
-                    36, //set as per the user screen size
-                height: 55,
-                child: CustomTextFieldWidget(
-                  editingController: employmentStatusTextEditingController,
-                  labelText: "Employment Status",
-                  iconData: CupertinoIcons.rectangle_stack_person_crop_fill,
-                  isObscure: false,
-                ),
-              ),
-
-              const SizedBox(
-                height: 24,
-              ),
-
-              //Income
-              SizedBox(
-                width: MediaQuery.of(context).size.width -
-                    36, //set as per the user screen size
-                height: 55,
-                child: CustomTextFieldWidget(
-                  editingController: incomeTextEditingController,
-                  labelText: "Income",
-                  iconData: CupertinoIcons.money_dollar_circle,
-                  isObscure: false,
-                ),
-              ),
-
-              const SizedBox(
-                height: 24,
-              ),
-
-              //Living Situation
-              SizedBox(
-                width: MediaQuery.of(context).size.width -
-                    36, //set as per the user screen size
-                height: 55,
-                child: CustomTextFieldWidget(
-                  editingController: livingSituationTextEditingController,
-                  labelText: "Living Situation",
-                  iconData: CupertinoIcons.person_2_square_stack,
-                  isObscure: false,
-                ),
-              ),
-
-              const SizedBox(
-                height: 24,
-              ),
-
-              //Willing To Relocate
-              SizedBox(
-                width: MediaQuery.of(context).size.width -
-                    36, //set as per the user screen size
-                height: 55,
-                child: CustomTextFieldWidget(
-                  editingController: willingToRelocateTextEditingController,
-                  labelText: "Are you willing To Relocate?",
-                  iconData: CupertinoIcons.person_2,
-                  isObscure: false,
-                ),
-              ),
-
-              const SizedBox(
-                height: 24,
-              ),
-
-              //RelationshipYouAreLookingFor
-              SizedBox(
-                width: MediaQuery.of(context).size.width -
-                    36, //set as per the user screen size
-                height: 55,
-                child: CustomTextFieldWidget(
-                  editingController:
-                      relationshipYouAreLookingForTextEditingController,
-                  labelText: "What relationship you are looking for?",
-                  iconData: CupertinoIcons.person_2,
                   isObscure: false,
                 ),
               ),
@@ -650,73 +537,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 height: 24,
               ),
 
-              //education
-              SizedBox(
-                width: MediaQuery.of(context).size.width -
-                    36, //set as per the user screen size
-                height: 55,
-                child: CustomTextFieldWidget(
-                  editingController: educationTextEditingController,
-                  labelText: "Education",
-                  iconData: Icons.history_edu,
-                  isObscure: false,
-                ),
-              ),
-
-              const SizedBox(
-                height: 24,
-              ),
-
-              //Language Spoken
-              SizedBox(
-                width: MediaQuery.of(context).size.width -
-                    36, //set as per the user screen size
-                height: 55,
-                child: CustomTextFieldWidget(
-                  editingController: languageSpokenTextEditingController,
-                  labelText: "Language Spoken",
-                  iconData: CupertinoIcons.person_badge_plus_fill,
-                  isObscure: false,
-                ),
-              ),
-
-              const SizedBox(
-                height: 24,
-              ),
-
-              //Religion
-              SizedBox(
-                width: MediaQuery.of(context).size.width -
-                    36, //set as per the user screen size
-                height: 55,
-                child: CustomTextFieldWidget(
-                  editingController: religionTextEditingController,
-                  labelText: "Religion",
-                  iconData: CupertinoIcons.checkmark_seal_fill,
-                  isObscure: false,
-                ),
-              ),
-
-              const SizedBox(
-                height: 24,
-              ),
-
-              //Ethnicity
-              SizedBox(
-                width: MediaQuery.of(context).size.width -
-                    36, //set as per the user screen size
-                height: 55,
-                child: CustomTextFieldWidget(
-                  editingController: ethnicityTextEditingController,
-                  labelText: "Ethnicity",
-                  iconData: CupertinoIcons.eye,
-                  isObscure: false,
-                ),
-              ),
-
-              const SizedBox(
-                height: 30,
-              ),
+              //
 
               //Create Account Button
               Container(
@@ -779,46 +600,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               maritalStatusTextEditingController.text
                                   .trim()
                                   .isNotEmpty &&
-                              haveChildrenTextEditingController.text
-                                  .trim()
-                                  .isNotEmpty &&
-                              noOfChildrenTextEditingController.text
-                                  .trim()
-                                  .isNotEmpty &&
                               professionTextEditingController.text
-                                  .trim()
-                                  .isNotEmpty &&
-                              employmentStatusTextEditingController.text
-                                  .trim()
-                                  .isNotEmpty &&
-                              incomeTextEditingController.text
-                                  .trim()
-                                  .isNotEmpty &&
-                              livingSituationTextEditingController.text
-                                  .trim()
-                                  .isNotEmpty &&
-                              willingToRelocateTextEditingController.text
-                                  .trim()
-                                  .isNotEmpty &&
-                              relationshipYouAreLookingForTextEditingController
-                                  .text
                                   .trim()
                                   .isNotEmpty &&
 
                               //Background and Cultural Values
                               nationalityTextEditingController.text
-                                  .trim()
-                                  .isNotEmpty &&
-                              educationTextEditingController.text
-                                  .trim()
-                                  .isNotEmpty &&
-                              languageSpokenTextEditingController.text
-                                  .trim()
-                                  .isNotEmpty &&
-                              religionTextEditingController.text
-                                  .trim()
-                                  .isNotEmpty &&
-                              ethnicityTextEditingController.text
                                   .trim()
                                   .isNotEmpty) {
                         setState(() {

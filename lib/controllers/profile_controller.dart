@@ -21,7 +21,6 @@ class ProfileController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-
     if (chosenGender == null || chosenCountry == null || chosenAge == null) {
       usersProfileList.bindStream(FirebaseFirestore.instance
           .collection("Users")
@@ -56,40 +55,40 @@ class ProfileController extends GetxController {
         .collection("Users")
         .doc(toUserID)
         .collection("favouriteReceived")
-        .doc(currentuserID)
+        .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
 
     //remove the favourite from database if already marked favourite
     if (document.exists) {
-      //Remove currentuserID from the favourite Received List of that profile person [toUserID]
+      //Remove FirebaseAuth.instance.currentUser!.uid from the favourite Received List of that profile person [toUserID]
       await FirebaseFirestore.instance
           .collection("Users")
           .doc(toUserID)
           .collection("favouriteReceived")
-          .doc(currentuserID)
+          .doc(FirebaseAuth.instance.currentUser!.uid)
           .delete();
 
-      //Remove profile person [toUserID] from the favourite Sent List of the currentuserID
+      //Remove profile person [toUserID] from the favourite Sent List of the FirebaseAuth.instance.currentUser!.uid
       await FirebaseFirestore.instance
           .collection("Users")
-          .doc(currentuserID)
+          .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection("favouriteSent")
           .doc(toUserID)
           .delete();
     } else // if not exists then mark as favourite in database
     {
-      //Add currentuserID to the favourite Received List of that profile person [toUserID]
+      //Add FirebaseAuth.instance.currentUser!.uid to the favourite Received List of that profile person [toUserID]
       await FirebaseFirestore.instance
           .collection("Users")
           .doc(toUserID)
           .collection("favouriteReceived")
-          .doc(currentuserID)
+          .doc(FirebaseAuth.instance.currentUser!.uid)
           .set({});
 
-      //Add profile person [toUserID] to the favourite Sent List of the currentuserID
+      //Add profile person [toUserID] to the favourite Sent List of the FirebaseAuth.instance.currentUser!.uid
       await FirebaseFirestore.instance
           .collection("Users")
-          .doc(currentuserID)
+          .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection("favouriteSent")
           .doc(toUserID)
           .set({});
@@ -105,40 +104,40 @@ class ProfileController extends GetxController {
         .collection("Users")
         .doc(toUserID)
         .collection("likeReceived")
-        .doc(currentuserID)
+        .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
 
     //remove the like from database if already marked favourite
     if (document.exists) {
-      //Remove currentuserID from the like Received List of that profile person [toUserID]
+      //Remove FirebaseAuth.instance.currentUser!.uid from the like Received List of that profile person [toUserID]
       await FirebaseFirestore.instance
           .collection("Users")
           .doc(toUserID)
           .collection("likeReceived")
-          .doc(currentuserID)
+          .doc(FirebaseAuth.instance.currentUser!.uid)
           .delete();
 
-      //Remove profile person [toUserID] from the like Sent List of the currentuserID
+      //Remove profile person [toUserID] from the like Sent List of the FirebaseAuth.instance.currentUser!.uid
       await FirebaseFirestore.instance
           .collection("Users")
-          .doc(currentuserID)
+          .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection("likeSent")
           .doc(toUserID)
           .delete();
     } else // if not exists then mark as like in database
     {
-      //Add currentuserID to the like Received List of that profile person [toUserID]
+      //Add FirebaseAuth.instance.currentUser!.uid to the like Received List of that profile person [toUserID]
       await FirebaseFirestore.instance
           .collection("Users")
           .doc(toUserID)
           .collection("likeReceived")
-          .doc(currentuserID)
+          .doc(FirebaseAuth.instance.currentUser!.uid)
           .set({});
 
-      //Add profile person [toUserID] to the like Sent List of the currentuserID
+      //Add profile person [toUserID] to the like Sent List of the FirebaseAuth.instance.currentUser!.uid
       await FirebaseFirestore.instance
           .collection("Users")
-          .doc(currentuserID)
+          .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection("likeSent")
           .doc(toUserID)
           .set({});
@@ -154,25 +153,25 @@ class ProfileController extends GetxController {
         .collection("Users")
         .doc(toUserID)
         .collection("viewReceived")
-        .doc(currentuserID)
+        .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
 
     if (document.exists) {
       print("already in view list");
     } else // if not exists then add seen feature in database
     {
-      //Add currentuserID to the view Received List of that profile person [toUserID]
+      //Add FirebaseAuth.instance.currentUser!.uid to the view Received List of that profile person [toUserID]
       await FirebaseFirestore.instance
           .collection("Users")
           .doc(toUserID)
           .collection("viewReceived")
-          .doc(currentuserID)
+          .doc(FirebaseAuth.instance.currentUser!.uid)
           .set({});
 
-      //Add profile person [toUserID] to the View Sent List of the currentuserID
+      //Add profile person [toUserID] to the View Sent List of the FirebaseAuth.instance.currentUser!.uid
       await FirebaseFirestore.instance
           .collection("Users")
-          .doc(currentuserID)
+          .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection("viewSent")
           .doc(toUserID)
           .set({});
@@ -186,25 +185,25 @@ class ProfileController extends GetxController {
   // chatUser(String toUserID, String senderName) async {
   //   var document = await FirebaseFirestore.instance
   //       .collection("users")
-  //       .doc(currentuserID)
+  //       .doc(FirebaseAuth.instance.currentUser!.uid)
   //       .get();
   //
   //   if (document.exists) {
   //     print("already in view list");
   //   } else // if not exists then add seen feature in database
   //   {
-  //     //Add currentuserID to the view Received List of that profile person [toUserID]
+  //     //Add FirebaseAuth.instance.currentUser!.uid to the view Received List of that profile person [toUserID]
   //     await FirebaseFirestore.instance
   //         .collection("Users")
   //         .doc(toUserID)
   //         .collection("viewReceived")
-  //         .doc(currentuserID)
+  //         .doc(FirebaseAuth.instance.currentUser!.uid)
   //         .set({});
   //
-  //     //Add profile person [toUserID] to the View Sent List of the currentuserID
+  //     //Add profile person [toUserID] to the View Sent List of the FirebaseAuth.instance.currentUser!.uid
   //     await FirebaseFirestore.instance
   //         .collection("Users")
-  //         .doc(currentuserID)
+  //         .doc(FirebaseAuth.instance.currentUser!.uid)
   //         .collection("viewSent")
   //         .doc(toUserID)
   //         .set({});
@@ -256,7 +255,7 @@ class ProfileController extends GetxController {
       "id": "1",
       "status": "done",
       "userID": receiverID,
-      "senderID": currentuserID,
+      "senderID": FirebaseAuth.instance.currentUser!.uid,
     };
 
     Map notificationOfficialFormat = {

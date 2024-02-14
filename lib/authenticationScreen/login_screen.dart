@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:siimple/allConstants/constants.dart';
@@ -26,20 +28,20 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     ///ChatApp
-    AuthProvider authProvider = Provider.of<AuthProvider>(context);
-    switch (authProvider.status) {
-      case Status.authenticateError:
-        Fluttertoast.showToast(msg: "Sign in fail");
-        break;
-      case Status.authenticateCanceled:
-        Fluttertoast.showToast(msg: "Sign in canceled");
-        break;
-      case Status.authenticated:
-        Fluttertoast.showToast(msg: "Sign in success");
-        break;
-      default:
-        break;
-    }
+    // AuthProvider authProvider = Provider.of<AuthProvider>(context);
+    // switch (authProvider.status) {
+    //   case Status.authenticateError:
+    //     Fluttertoast.showToast(msg: "Sign in fail");
+    //     break;
+    //   case Status.authenticateCanceled:
+    //     Fluttertoast.showToast(msg: "Sign in canceled");
+    //     break;
+    //   case Status.authenticated:
+    //     Fluttertoast.showToast(msg: "Sign in success");
+    //     break;
+    //   default:
+    //     break;
+    // }
 
     ///ChatApp
 
@@ -199,26 +201,26 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 16,
               ),
 
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: GestureDetector(
-                  onTap: () async {
-                    bool isSuccess = await authProvider.handleSignIn();
-                    if (isSuccess) {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => HomeScreen()));
-                    }
-                  },
-                  child: Image.asset("images/google_login.jpg"),
-                ),
-              ),
-              Positioned(
-                child: authProvider.status == Status.authenticating
-                    ? LoadingView()
-                    : SizedBox.shrink(),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.all(20.0),
+              //   child: GestureDetector(
+              //     onTap: () async {
+              //       bool isSuccess = await authProvider.handleSignIn();
+              //       if (isSuccess) {
+              //         Navigator.pushReplacement(
+              //             context,
+              //             MaterialPageRoute(
+              //                 builder: (context) => HomeScreen()));
+              //       }
+              //     },
+              //     child: Image.asset("images/google_login.jpg"),
+              //   ),
+              // ),
+              // Positioned(
+              //   child: authProvider.status == Status.authenticating
+              //       ? LoadingView()
+              //       : SizedBox.shrink(),
+              // ),
             ],
           ),
         ),

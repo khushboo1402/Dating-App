@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:siimple/global.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class _ViewSentViewReceivedScreenState
     if (isViewSentClicked) {
       var viewSentDocument = await FirebaseFirestore.instance
           .collection("Users")
-          .doc(currentuserID.toString())
+          .doc(FirebaseAuth.instance.currentUser!.uid.toString())
           .collection("viewSent")
           .get();
 
@@ -33,7 +34,7 @@ class _ViewSentViewReceivedScreenState
     } else {
       var viewReceivedDocument = await FirebaseFirestore.instance
           .collection("Users")
-          .doc(currentuserID.toString())
+          .doc(FirebaseAuth.instance.currentUser!.uid.toString())
           .collection("viewReceived")
           .get();
 

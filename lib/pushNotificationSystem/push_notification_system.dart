@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:siimple/global.dart';
 import 'package:siimple/tabScreens/user_details_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -185,7 +186,7 @@ class PushNotificationSystem {
 
     await FirebaseFirestore.instance
         .collection("Users")
-        .doc(currentuserID)
+        .doc(FirebaseAuth.instance.currentUser!.uid)
         .update({
       "userDeviceToken": deviceToken,
     });
