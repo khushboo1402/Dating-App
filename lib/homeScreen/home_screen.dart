@@ -1,3 +1,4 @@
+import 'package:siimple/main.dart';
 import 'package:siimple/pushNotificationSystem/push_notification_system.dart';
 import 'package:siimple/tabScreens/favourite_sent_favourite_received_screen.dart';
 import 'package:siimple/tabScreens/like_sent_like_received_screen.dart';
@@ -38,6 +39,26 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: isWhite ? Colors.white : Colors.black,
+      appBar: AppBar(
+        backgroundColor: isWhite ? Colors.white : Colors.black,
+        leading: IconButton(
+          icon: Switch(
+            value: isWhite,
+            onChanged: (value) {
+              setState(() {
+                isWhite = value;
+                print(isWhite);
+              });
+            },
+            activeTrackColor: Colors.grey,
+            activeColor: Colors.white,
+            inactiveTrackColor: Colors.grey,
+            inactiveThumbColor: Colors.black45,
+          ),
+          onPressed: () => "",
+        ),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (indexNumber) {
           setState(() {
@@ -45,9 +66,9 @@ class _HomeScreenState extends State<HomeScreen> {
           });
         },
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.black,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.white12,
+        backgroundColor: isWhite ? Colors.white : Colors.black,
+        selectedItemColor: Colors.pink,
+        unselectedItemColor: Colors.purple,
         currentIndex: screenIndex,
         items: const [
           //Swipping Screen Icon Button

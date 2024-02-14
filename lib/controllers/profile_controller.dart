@@ -183,6 +183,38 @@ class ProfileController extends GetxController {
     update();
   }
 
+  // chatUser(String toUserID, String senderName) async {
+  //   var document = await FirebaseFirestore.instance
+  //       .collection("users")
+  //       .doc(currentuserID)
+  //       .get();
+  //
+  //   if (document.exists) {
+  //     print("already in view list");
+  //   } else // if not exists then add seen feature in database
+  //   {
+  //     //Add currentuserID to the view Received List of that profile person [toUserID]
+  //     await FirebaseFirestore.instance
+  //         .collection("Users")
+  //         .doc(toUserID)
+  //         .collection("viewReceived")
+  //         .doc(currentuserID)
+  //         .set({});
+  //
+  //     //Add profile person [toUserID] to the View Sent List of the currentuserID
+  //     await FirebaseFirestore.instance
+  //         .collection("Users")
+  //         .doc(currentuserID)
+  //         .collection("viewSent")
+  //         .doc(toUserID)
+  //         .set({});
+  //
+  //     //send notification
+  //     sendNotificationToUser(toUserID, "View", senderName);
+  //   }
+  //   update();
+  // }
+
   sendNotificationToUser(receiverID, featureType, senderName) async {
     String userDeviceToken = "";
     await FirebaseFirestore.instance

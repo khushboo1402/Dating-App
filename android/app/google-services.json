@@ -1,7 +1,7 @@
 {
   "project_info": {
     "project_number": "833397462294",
-    "project_id": "siimple-9cccd",
+      "project_id": "siimple-9cccd",
     "storage_bucket": "siimple-9cccd.appspot.com"
   },
   "client": [
@@ -12,7 +12,20 @@
           "package_name": "com.leedsimple.siimple"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "833397462294-jcacgg86dp57k248dbdt66bvtjsl0iu7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.leedsimple.siimple",
+            "certificate_hash": "ece8e3b957a93804a82e385ec527b1882cf65309"
+          }
+        },
+        {
+          "client_id": "833397462294-lsv7u961g64nj3gmpisqb2vg55ag1k8g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCzzmw2sP99qegNLqPB6Rs3I66ks25_XyE"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "833397462294-lsv7u961g64nj3gmpisqb2vg55ag1k8g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

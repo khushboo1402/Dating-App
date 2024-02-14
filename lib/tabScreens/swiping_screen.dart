@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:siimple/allScreens/chat_page.dart';
 import 'package:siimple/controllers/profile_controller.dart';
 import 'package:siimple/global.dart';
 import 'package:siimple/tabScreens/user_details_screen.dart';
@@ -7,7 +8,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:siimple/utilities/utilities.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:siimple/allScreens/chat_page.dart';
 
 class SwippingScreen extends StatefulWidget {
   const SwippingScreen({super.key});
@@ -20,6 +23,8 @@ class _SwippingScreenState extends State<SwippingScreen> {
   ProfileController profileController = Get.put(ProfileController());
 
   String senderName = "";
+  String senderId = "";
+  String imageProfile = "";
   startChattingInWhatsApp(String receiverPhoneNumber) async {
     var androidUrl =
         "whatsapp://send?phone=$receiverPhoneNumber&text=Hi, I found your profile on dating app.";
@@ -179,6 +184,8 @@ class _SwippingScreenState extends State<SwippingScreen> {
         .then((dataSnapshot) {
       setState(() {
         senderName = dataSnapshot.data()!["name"].toString();
+        senderId = dataSnapshot.data()!["uid"].toString();
+        imageProfile = dataSnapshot.data()!["imageProfile"].toString();
       });
     });
   }
@@ -383,10 +390,45 @@ class _SwippingScreenState extends State<SwippingScreen> {
 
                           //chat button
                           GestureDetector(
+                            // onTap: () {
+                            //   startChattingInWhatsApp(
+                            //       eachProfileInfo.phoneNo.toString());
+                            //
+                            //
+                            // },
                             onTap: () {
-                              startChattingInWhatsApp(
-                                  eachProfileInfo.phoneNo.toString());
+                              if (Utilities.isKeyboardShowing()) {
+                                Utilities.closeKeyboard(context);
+                              }
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ChatPage(
+                                    peerId: eachProfileInfo.uid.toString(),
+                                    peerAvatar:
+                                        eachProfileInfo.imageProfile.toString(),
+                                    peerNickname:
+                                        eachProfileInfo.name.toString(),
+                                  ),
+                                ),
+                              );
                             },
+                            // onTap: () {
+                            //   Future.delayed(Duration.zero, () {
+                            //     Navigator.push(
+                            //       context,
+                            //       MaterialPageRoute(
+                            //         builder: (context) => ChatPage(
+                            //           peerId: eachProfileInfo.uid.toString(),
+                            //           peerAvatar: eachProfileInfo.imageProfile
+                            //               .toString(),
+                            //           peerNickname:
+                            //               eachProfileInfo.name.toString(),
+                            //         ),
+                            //       ),
+                            //     );
+                            //   });
+                            // },
                             child: Image.asset("images/message.png",
                                 width: 60, height: 60),
                           ),

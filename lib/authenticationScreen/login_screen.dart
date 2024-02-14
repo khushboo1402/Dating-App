@@ -1,5 +1,11 @@
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
+import 'package:siimple/allConstants/constants.dart';
+import 'package:siimple/allProviders/auth_provider.dart';
+import 'package:siimple/allWidgets/loading_view.dart';
 import 'package:siimple/authenticationScreen/registration_screen.dart';
 import 'package:siimple/controllers/authentication_controller.dart';
+import 'package:siimple/homeScreen/home_screen.dart';
 import 'package:siimple/widgets/custom_text_field_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,7 +25,26 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ///ChatApp
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+    switch (authProvider.status) {
+      case Status.authenticateError:
+        Fluttertoast.showToast(msg: "Sign in fail");
+        break;
+      case Status.authenticateCanceled:
+        Fluttertoast.showToast(msg: "Sign in canceled");
+        break;
+      case Status.authenticated:
+        Fluttertoast.showToast(msg: "Sign in success");
+        break;
+      default:
+        break;
+    }
+
+    ///ChatApp
+
     return Scaffold(
+      backgroundColor: Colors.black87,
       body: SingleChildScrollView(
         child: Center(
           child: Column(
@@ -33,14 +58,20 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const Text(
                 "Welcome",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: ColorConstants.primaryColor),
               ),
               const SizedBox(
                 height: 10,
               ),
               const Text(
                 "Login now to find your best Match",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: ColorConstants.primaryColor),
               ),
               //Space
               const SizedBox(
@@ -166,6 +197,27 @@ class _LoginScreenState extends State<LoginScreen> {
               //space
               const SizedBox(
                 height: 16,
+              ),
+
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: GestureDetector(
+                  onTap: () async {
+                    bool isSuccess = await authProvider.handleSignIn();
+                    if (isSuccess) {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HomeScreen()));
+                    }
+                  },
+                  child: Image.asset("images/google_login.jpg"),
+                ),
+              ),
+              Positioned(
+                child: authProvider.status == Status.authenticating
+                    ? LoadingView()
+                    : SizedBox.shrink(),
               ),
             ],
           ),

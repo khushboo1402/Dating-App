@@ -1,6 +1,7 @@
 import 'package:siimple/global.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:siimple/main.dart';
 
 class FavouriteSentFavouriteReceivedScreen extends StatefulWidget {
   const FavouriteSentFavouriteReceivedScreen({super.key});
@@ -71,159 +72,160 @@ class _FavouriteSentFavouriteReceivedScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextButton(
-                  onPressed: () {
-                    favouriteSentList.clear();
-                    favouriteSentList = [];
-                    favouriteReceivedList.clear();
-                    favouriteReceivedList = [];
-                    favouriteList.clear();
-                    favouriteList = [];
+      appBar: AppBar(
+        backgroundColor: isWhite ? Colors.white : Colors.black,
+        automaticallyImplyLeading: true,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextButton(
+                onPressed: () {
+                  favouriteSentList.clear();
+                  favouriteSentList = [];
+                  favouriteReceivedList.clear();
+                  favouriteReceivedList = [];
+                  favouriteList.clear();
+                  favouriteList = [];
 
-                    setState(() {
-                      isFavouriteSentClicked = true;
-                    });
-                    getFavouriteListKeys();
-                  },
-                  child: Text(
-                    "My Favourites",
-                    style: TextStyle(
-                      color:
-                          isFavouriteSentClicked ? Colors.white : Colors.grey,
-                      fontWeight: isFavouriteSentClicked
-                          ? FontWeight.bold
-                          : FontWeight.normal,
-                      fontSize: 14,
-                    ),
-                  )),
-              const Text(
-                "   |   ",
-                style: TextStyle(
-                  color: Colors.grey,
-                ),
+                  setState(() {
+                    isFavouriteSentClicked = true;
+                  });
+                  getFavouriteListKeys();
+                },
+                child: Text(
+                  "My Favourites",
+                  style: TextStyle(
+                    color: isFavouriteSentClicked ? Colors.pink : Colors.purple,
+                    fontWeight: isFavouriteSentClicked
+                        ? FontWeight.bold
+                        : FontWeight.normal,
+                    fontSize: 14,
+                  ),
+                )),
+            const Text(
+              "   |   ",
+              style: TextStyle(
+                color: Colors.purple,
               ),
-              TextButton(
-                  onPressed: () {
-                    favouriteSentList.clear();
-                    favouriteSentList = [];
-                    favouriteReceivedList.clear();
-                    favouriteReceivedList = [];
-                    favouriteList.clear();
-                    favouriteList = [];
+            ),
+            TextButton(
+                onPressed: () {
+                  favouriteSentList.clear();
+                  favouriteSentList = [];
+                  favouriteReceivedList.clear();
+                  favouriteReceivedList = [];
+                  favouriteList.clear();
+                  favouriteList = [];
 
-                    setState(() {
-                      isFavouriteSentClicked = false;
-                    });
-                    getFavouriteListKeys();
-                  },
-                  child: Text(
-                    "I'm their Favourite",
-                    style: TextStyle(
-                      color:
-                          isFavouriteSentClicked ? Colors.grey : Colors.white,
-                      fontWeight: isFavouriteSentClicked
-                          ? FontWeight.normal
-                          : FontWeight.bold,
-                      fontSize: 14,
-                    ),
-                  ))
-            ],
-          ),
-          centerTitle: true,
+                  setState(() {
+                    isFavouriteSentClicked = false;
+                  });
+                  getFavouriteListKeys();
+                },
+                child: Text(
+                  "I'm their Favourite",
+                  style: TextStyle(
+                    color: isFavouriteSentClicked ? Colors.purple : Colors.pink,
+                    fontWeight: isFavouriteSentClicked
+                        ? FontWeight.normal
+                        : FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                ))
+          ],
         ),
-        body: favouriteList.isEmpty
-            ? Center(
-                child: Icon(
-                  Icons.person_off_sharp,
-                  color: Colors.white,
-                  size: 60,
-                ),
-              )
-            : GridView.count(
-                crossAxisCount: 2,
-                padding: const EdgeInsets.all(8),
-                children: List.generate(favouriteList.length, (index) {
-                  return GridTile(
-                      child: Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Card(
-                      color: Colors.blue.shade200,
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                            image: NetworkImage(
-                              favouriteList[index]["imageProfile"],
-                            ),
-                            fit: BoxFit.cover,
-                          )),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Center(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Spacer(),
+        centerTitle: true,
+      ),
+      body: favouriteList.isEmpty
+          ? Center(
+              child: Icon(
+                Icons.person_off_sharp,
+                color: Colors.pink,
+                size: 60,
+              ),
+            )
+          : GridView.count(
+              crossAxisCount: 2,
+              padding: const EdgeInsets.all(8),
+              children: List.generate(favouriteList.length, (index) {
+                return GridTile(
+                    child: Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: Card(
+                    color: Colors.blue.shade200,
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                          image: NetworkImage(
+                            favouriteList[index]["imageProfile"],
+                          ),
+                          fit: BoxFit.cover,
+                        )),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Center(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Spacer(),
 
-                                  //name - age
-                                  Text(
-                                    favouriteList[index]["name"].toString() +
-                                        " ○ " +
-                                        favouriteList[index]["age"].toString(),
-                                    maxLines: 2,
-                                    style: const TextStyle(
-                                      overflow: TextOverflow.ellipsis,
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
+                                //name - age
+                                Text(
+                                  favouriteList[index]["name"].toString() +
+                                      " ○ " +
+                                      favouriteList[index]["age"].toString(),
+                                  maxLines: 2,
+                                  style: const TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: Colors.pink,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+
+                                const SizedBox(
+                                  height: 4,
+                                ),
+
+                                //Icon - city - country
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.location_on_outlined,
+                                      color: Colors.grey,
+                                      size: 16,
                                     ),
-                                  ),
-
-                                  const SizedBox(
-                                    height: 4,
-                                  ),
-
-                                  //Icon - city - country
-                                  Row(
-                                    children: [
-                                      const Icon(
-                                        Icons.location_on_outlined,
-                                        color: Colors.grey,
-                                        size: 16,
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          favouriteList[index]["city"]
-                                                  .toString() +
-                                              " , " +
-                                              favouriteList[index]["country"]
-                                                  .toString(),
-                                          maxLines: 2,
-                                          style: const TextStyle(
-                                            overflow: TextOverflow.ellipsis,
-                                            color: Colors.white,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                    Expanded(
+                                      child: Text(
+                                        favouriteList[index]["city"]
+                                                .toString() +
+                                            " , " +
+                                            favouriteList[index]["country"]
+                                                .toString(),
+                                        maxLines: 2,
+                                        style: const TextStyle(
+                                          overflow: TextOverflow.ellipsis,
+                                          color: Colors.pink,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ));
-                }),
-              ));
+                  ),
+                ));
+              }),
+            ),
+      backgroundColor: isWhite ? Colors.white : Colors.black,
+    );
   }
 }

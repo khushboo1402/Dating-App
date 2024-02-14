@@ -373,13 +373,13 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
               ? Container()
               : IconButton(
                   onPressed: () {
-                    if (_image.length == 5) {
+                    if (_image.length == 1) {
                       setState(() {
                         uploading = true;
                         next = true;
                       });
                     } else {
-                      Get.snackbar("5 Images", "Please choose 5 Images");
+                      Get.snackbar("Images", "Please choose atleast 1 Image");
                     }
                   },
                   icon: const Icon(

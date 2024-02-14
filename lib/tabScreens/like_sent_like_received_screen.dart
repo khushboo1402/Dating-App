@@ -1,6 +1,7 @@
 import 'package:siimple/global.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:siimple/main.dart';
 
 class LikeSentLikeReceivedScreen extends StatefulWidget {
   const LikeSentLikeReceivedScreen({super.key});
@@ -71,156 +72,157 @@ class _LikeSentLikeReceivedScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextButton(
-                  onPressed: () {
-                    likeSentList.clear();
-                    likeSentList = [];
-                    likeReceivedList.clear();
-                    likeReceivedList = [];
-                    likesList.clear();
-                    likesList = [];
+      appBar: AppBar(
+        backgroundColor: isWhite ? Colors.white : Colors.black,
+        automaticallyImplyLeading: false,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextButton(
+                onPressed: () {
+                  likeSentList.clear();
+                  likeSentList = [];
+                  likeReceivedList.clear();
+                  likeReceivedList = [];
+                  likesList.clear();
+                  likesList = [];
 
-                    setState(() {
-                      isLikeSentClicked = true;
-                    });
-                    getLikedListKeys();
-                  },
-                  child: Text(
-                    "My Likes",
-                    style: TextStyle(
-                      color: isLikeSentClicked ? Colors.white : Colors.grey,
-                      fontWeight: isLikeSentClicked
-                          ? FontWeight.bold
-                          : FontWeight.normal,
-                      fontSize: 14,
-                    ),
-                  )),
-              const Text(
-                "   |   ",
-                style: TextStyle(
-                  color: Colors.grey,
-                ),
+                  setState(() {
+                    isLikeSentClicked = true;
+                  });
+                  getLikedListKeys();
+                },
+                child: Text(
+                  "My Likes",
+                  style: TextStyle(
+                    color: isLikeSentClicked ? Colors.pink : Colors.purple,
+                    fontWeight:
+                        isLikeSentClicked ? FontWeight.bold : FontWeight.normal,
+                    fontSize: 14,
+                  ),
+                )),
+            const Text(
+              "   |   ",
+              style: TextStyle(
+                color: Colors.purple,
               ),
-              TextButton(
-                  onPressed: () {
-                    likeSentList.clear();
-                    likeSentList = [];
-                    likeReceivedList.clear();
-                    likeReceivedList = [];
-                    likesList.clear();
-                    likesList = [];
+            ),
+            TextButton(
+                onPressed: () {
+                  likeSentList.clear();
+                  likeSentList = [];
+                  likeReceivedList.clear();
+                  likeReceivedList = [];
+                  likesList.clear();
+                  likesList = [];
 
-                    setState(() {
-                      isLikeSentClicked = false;
-                    });
-                    getLikedListKeys();
-                  },
-                  child: Text(
-                    "Who liked me?",
-                    style: TextStyle(
-                      color: isLikeSentClicked ? Colors.grey : Colors.white,
-                      fontWeight: isLikeSentClicked
-                          ? FontWeight.normal
-                          : FontWeight.bold,
-                      fontSize: 14,
-                    ),
-                  ))
-            ],
-          ),
-          centerTitle: true,
+                  setState(() {
+                    isLikeSentClicked = false;
+                  });
+                  getLikedListKeys();
+                },
+                child: Text(
+                  "Who liked me?",
+                  style: TextStyle(
+                    color: isLikeSentClicked ? Colors.purple : Colors.pink,
+                    fontWeight:
+                        isLikeSentClicked ? FontWeight.normal : FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                ))
+          ],
         ),
-        body: likesList.isEmpty
-            ? Center(
-                child: Icon(
-                  Icons.person_off_sharp,
-                  color: Colors.white,
-                  size: 60,
-                ),
-              )
-            : GridView.count(
-                crossAxisCount: 2,
-                padding: const EdgeInsets.all(8),
-                children: List.generate(likesList.length, (index) {
-                  return GridTile(
-                      child: Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Card(
-                      color: Colors.blue.shade200,
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                            image: NetworkImage(
-                              likesList[index]["imageProfile"],
-                            ),
-                            fit: BoxFit.cover,
-                          )),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Center(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Spacer(),
+        centerTitle: true,
+      ),
+      body: likesList.isEmpty
+          ? Center(
+              child: Icon(
+                Icons.person_off_sharp,
+                color: Colors.pink,
+                size: 60,
+              ),
+            )
+          : GridView.count(
+              crossAxisCount: 2,
+              padding: const EdgeInsets.all(8),
+              children: List.generate(likesList.length, (index) {
+                return GridTile(
+                    child: Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: Card(
+                    color: Colors.blue.shade200,
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                          image: NetworkImage(
+                            likesList[index]["imageProfile"],
+                          ),
+                          fit: BoxFit.cover,
+                        )),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Center(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Spacer(),
 
-                                  //name - age
-                                  Text(
-                                    likesList[index]["name"].toString() +
-                                        " ○ " +
-                                        likesList[index]["age"].toString(),
-                                    maxLines: 2,
-                                    style: const TextStyle(
-                                      overflow: TextOverflow.ellipsis,
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
+                                //name - age
+                                Text(
+                                  likesList[index]["name"].toString() +
+                                      " ○ " +
+                                      likesList[index]["age"].toString(),
+                                  maxLines: 2,
+                                  style: const TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: Colors.pink,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+
+                                const SizedBox(
+                                  height: 4,
+                                ),
+
+                                //Icon - city - country
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.location_on_outlined,
+                                      color: Colors.grey,
+                                      size: 16,
                                     ),
-                                  ),
-
-                                  const SizedBox(
-                                    height: 4,
-                                  ),
-
-                                  //Icon - city - country
-                                  Row(
-                                    children: [
-                                      const Icon(
-                                        Icons.location_on_outlined,
-                                        color: Colors.grey,
-                                        size: 16,
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          likesList[index]["city"].toString() +
-                                              " , " +
-                                              likesList[index]["country"]
-                                                  .toString(),
-                                          maxLines: 2,
-                                          style: const TextStyle(
-                                            overflow: TextOverflow.ellipsis,
-                                            color: Colors.white,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                    Expanded(
+                                      child: Text(
+                                        likesList[index]["city"].toString() +
+                                            " , " +
+                                            likesList[index]["country"]
+                                                .toString(),
+                                        maxLines: 2,
+                                        style: const TextStyle(
+                                          overflow: TextOverflow.ellipsis,
+                                          color: Colors.pink,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ));
-                }),
-              ));
+                  ),
+                ));
+              }),
+            ),
+      backgroundColor: isWhite ? Colors.white : Colors.black,
+    );
   }
 }
