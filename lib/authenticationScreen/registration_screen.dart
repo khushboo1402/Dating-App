@@ -1,6 +1,7 @@
+import 'dart:developer';
 import 'dart:io';
-
 import 'package:siimple/controllers/authentication_controller.dart';
+import 'package:siimple/main.dart';
 import 'package:siimple/widgets/custom_text_field_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,13 +15,6 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 var authenticationController = AuthenticationController.authController;
-
-@override
-void initState() {
-  // TODO: implement initState
-  // super.initState();
-  authenticationController.imageFile == null;
-}
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   //Personal Info
@@ -47,31 +41,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   TextEditingController smokeTextEditingController = TextEditingController();
   TextEditingController maritalStatusTextEditingController =
       TextEditingController();
-  TextEditingController haveChildrenTextEditingController =
-      TextEditingController();
-  TextEditingController noOfChildrenTextEditingController =
-      TextEditingController();
+
   TextEditingController professionTextEditingController =
-      TextEditingController();
-  TextEditingController employmentStatusTextEditingController =
-      TextEditingController();
-  TextEditingController incomeTextEditingController = TextEditingController();
-  TextEditingController livingSituationTextEditingController =
-      TextEditingController();
-  TextEditingController willingToRelocateTextEditingController =
-      TextEditingController();
-  TextEditingController relationshipYouAreLookingForTextEditingController =
       TextEditingController();
 
   //Background - Cultural Values
   TextEditingController nationalityTextEditingController =
-      TextEditingController();
-  TextEditingController educationTextEditingController =
-      TextEditingController();
-  TextEditingController languageSpokenTextEditingController =
-      TextEditingController();
-  TextEditingController religionTextEditingController = TextEditingController();
-  TextEditingController ethnicityTextEditingController =
       TextEditingController();
 
   bool showProgressBar = false;
@@ -79,6 +54,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: isWhite ? Colors.white : Colors.black,
       body: SingleChildScrollView(
         child: Center(
           child: Column(
@@ -112,26 +88,29 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 height: 10,
               ),
 
-              //Choose image circle avatar
-              authenticationController.imageFile == null
-                  ? const CircleAvatar(
-                      radius: 80,
-                      backgroundImage: AssetImage("images/profile_avatar.jpg"),
-                      backgroundColor: Colors.black,
-                    )
-                  : Container(
-                      width: 180,
-                      height: 180,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.grey,
-                          image: DecorationImage(
-                              fit: BoxFit.fitHeight,
-                              image: FileImage(File(
-                                authenticationController.imageFile!.path,
-                              )))),
-                    ),
-
+              GetBuilder<AuthenticationController>(
+                builder: (controller) =>
+                    //Choose image circle avatar
+                    authenticationController.imageFile == null
+                        ? const CircleAvatar(
+                            radius: 80,
+                            backgroundImage:
+                                AssetImage("images/profile_avatar.jpg"),
+                            backgroundColor: Colors.black,
+                          )
+                        : Container(
+                            width: 180,
+                            height: 180,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.grey,
+                                image: DecorationImage(
+                                    fit: BoxFit.fitHeight,
+                                    image: FileImage(File(
+                                      authenticationController.imageFile!.path,
+                                    )))),
+                          ),
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -634,28 +613,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             drinkTextEditingController.text.trim(),
                             smokeTextEditingController.text.trim(),
                             maritalStatusTextEditingController.text.trim(),
-                            haveChildrenTextEditingController.text.trim(),
-                            noOfChildrenTextEditingController.text.trim(),
                             professionTextEditingController.text.trim(),
-                            employmentStatusTextEditingController.text.trim(),
-                            incomeTextEditingController.text.trim(),
-                            livingSituationTextEditingController.text.trim(),
-                            willingToRelocateTextEditingController.text.trim(),
-                            relationshipYouAreLookingForTextEditingController
-                                .text
-                                .trim(),
 
                             //Background and Cultural Values
-                            nationalityTextEditingController.text.trim(),
-                            educationTextEditingController.text.trim(),
-                            languageSpokenTextEditingController.text.trim(),
-                            religionTextEditingController.text.trim(),
-                            ethnicityTextEditingController.text.trim());
+                            nationalityTextEditingController.text.trim());
 
                         setState(() {
                           showProgressBar = false;
-                          authenticationController.imageFile == null;
                         });
+                        authenticationController.imageFile = null;
                       } else {
                         Get.snackbar("A Field is Empty",
                             "Please fill out all fields in text fields");

@@ -103,18 +103,11 @@ class ChatPageState extends State<ChatPage> {
   }
 
   void readLocal() {
-    // if (authProvider.getUserFirebaseId()?.isNotEmpty == true) {
-    //   currentUserId = authProvider.getUserFirebaseId()!;
-    // } else {
-    //   Navigator.of(context).pushAndRemoveUntil(
-    //     MaterialPageRoute(builder: (context) => LoginScreen()),
-    //     (Route<dynamic> route) => false,
-    //   );
-    // }
-    if (FirebaseAuth.instance.currentUser!.uid.hashCode <= peerId.hashCode) {
-      groupChatId = '$FirebaseAuth.instance.currentUser!.uid-$peerId';
+    String currentUserId = FirebaseAuth.instance.currentUser!.uid;
+    if (currentUserId.hashCode <= peerId.hashCode) {
+      groupChatId = '$currentUserId-$peerId';
     } else {
-      groupChatId = '$peerId-$FirebaseAuth.instance.currentUser!.uid';
+      groupChatId = '$peerId-$currentUserId';
     }
 
     chatProvider.updateDataFirestore(

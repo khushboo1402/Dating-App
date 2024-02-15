@@ -6,15 +6,16 @@ class CustomTextFieldWidget extends StatelessWidget {
   final String? assetRef;
   final String? labelText;
   final bool? isObscure;
+  final Color? color; // Add a color parameter
 
-  CustomTextFieldWidget({
-    super.key,
-    this.editingController,
-    this.iconData,
-    this.assetRef,
-    this.labelText,
-    this.isObscure,
-  });
+  CustomTextFieldWidget(
+      {super.key,
+      this.editingController,
+      this.iconData,
+      this.assetRef,
+      this.labelText,
+      this.isObscure,
+      this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +42,8 @@ class CustomTextFieldWidget extends StatelessWidget {
             )),
       ),
       obscureText: isObscure!,
+      style: TextStyle(
+          fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white70),
     );
   }
 }

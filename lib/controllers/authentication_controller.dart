@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:siimple/authenticationScreen/login_screen.dart';
@@ -78,21 +79,10 @@ class AuthenticationController extends GetxController {
     String drink,
     String smoke,
     String maritalStatus,
-    String haveChildren,
-    String noOfChildren,
     String profession,
-    String employmentStatus,
-    String income,
-    String livingSituation,
-    String willingToRelocate,
-    String relationshipYouAreLookingFor,
 
     //Background and Cultural Values
     String nationality,
-    String education,
-    String languageSpoken,
-    String religion,
-    String ethnicity,
   ) async {
     try {
       //1. Authenticate user and create user with email and password
@@ -104,47 +94,37 @@ class AuthenticationController extends GetxController {
 
       //3. Save user information to Firestore Database
       personModel.Person personInstance = personModel.Person(
+        //Personal info
+        uid: FirebaseAuth.instance.currentUser!.uid,
+        imageProfile: urlOfDownloadedImage,
+        name: name,
+        email: email,
+        password: password,
+        age: int.parse(age),
+        gender: gender.toLowerCase(),
+        phoneNo: phoneNo,
+        city: city,
+        country: country,
+        profileHeading: profileHeading,
+        lookingForInaPartner: lookingForInaPartner,
+        publishedDateTime: DateTime.now().microsecondsSinceEpoch,
 
-          //Personal info
-          uid: FirebaseAuth.instance.currentUser!.uid,
-          imageProfile: urlOfDownloadedImage,
-          name: name,
-          email: email,
-          password: password,
-          age: int.parse(age),
-          gender: gender.toLowerCase(),
-          phoneNo: phoneNo,
-          city: city,
-          country: country,
-          profileHeading: profileHeading,
-          lookingForInaPartner: lookingForInaPartner,
-          publishedDateTime: DateTime.now().microsecondsSinceEpoch,
+        // Appearance
 
-          // Appearance
+        height: height,
+        weight: weight,
+        bodyType: bodyType,
 
-          height: height,
-          weight: weight,
-          bodyType: bodyType,
+        //Life Style
+        drink: drink,
+        smoke: smoke,
+        maritalStatus: maritalStatus,
 
-          //Life Style
-          drink: drink,
-          smoke: smoke,
-          maritalStatus: maritalStatus,
-          haveChildren: haveChildren,
-          noOfChildren: noOfChildren,
-          profession: profession,
-          employmentStatus: employmentStatus,
-          income: income,
-          livingSituation: livingSituation,
-          willingToRelocate: willingToRelocate,
-          relationshipYouAreLookingFor: relationshipYouAreLookingFor,
+        profession: profession,
 
-          //Background and Cultural Values
-          nationality: nationality,
-          education: education,
-          languageSpoken: languageSpoken,
-          religion: religion,
-          ethnicity: ethnicity);
+        //Background and Cultural Values
+        nationality: nationality,
+      );
 
       await FirebaseFirestore.instance
           .collection("Users")
@@ -187,7 +167,6 @@ class AuthenticationController extends GetxController {
   void onReady() {
     // TODO: implement onReady
     super.onReady();
-
     firebaseCurrentUser = Rx<User?>(FirebaseAuth.instance.currentUser);
     firebaseCurrentUser.bindStream(FirebaseAuth.instance.authStateChanges());
 

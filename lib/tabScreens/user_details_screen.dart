@@ -76,11 +76,21 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
       if (snapshot.exists) {
         if (snapshot.data()!["urlImage1"] != null) {
           setState(() {
-            urlImage1 = snapshot.data()!["urlImage1"];
-            urlImage2 = snapshot.data()!["urlImage2"];
-            urlImage3 = snapshot.data()!["urlImage3"];
-            urlImage4 = snapshot.data()!["urlImage4"];
-            urlImage5 = snapshot.data()!["urlImage5"];
+            urlImage1 = snapshot.data()!["urlImage1"] != ""
+                ? snapshot.data()!["urlImage1"]
+                : urlImage1;
+            urlImage2 = snapshot.data()!["urlImage2"] != ""
+                ? snapshot.data()!["urlImage2"]
+                : urlImage2;
+            urlImage3 = snapshot.data()!["urlImage3"] != ""
+                ? snapshot.data()!["urlImage3"]
+                : urlImage3;
+            urlImage4 = snapshot.data()!["urlImage4"] != ""
+                ? snapshot.data()!["urlImage4"]
+                : urlImage4;
+            urlImage5 = snapshot.data()!["urlImage5"] != ""
+                ? snapshot.data()!["urlImage5"]
+                : urlImage5;
           });
         }
 
@@ -103,22 +113,10 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
           drink = snapshot.data()!["drink"];
           smoke = snapshot.data()!["smoke"];
           maritalStatus = snapshot.data()!["maritalStatus"];
-          haveChildren = snapshot.data()!["haveChildren"];
-          noOfChildren = snapshot.data()!["noOfChildren"];
           profession = snapshot.data()!["profession"];
-          employmentStatus = snapshot.data()!["employmentStatus"];
-          income = snapshot.data()!["income"];
-          livingSituation = snapshot.data()!["livingSituation"];
-          willingToRelocate = snapshot.data()!["willingToRelocate"];
-          relationshipYouAreLookingFor =
-              snapshot.data()!["relationshipYouAreLookingFor"];
 
           //Background and Cultural Values
           nationality = snapshot.data()!["nationality"];
-          education = snapshot.data()!["education"];
-          languageSpoken = snapshot.data()!["languageSpoken"];
-          religion = snapshot.data()!["religion"];
-          ethnicity = snapshot.data()!["ethnicity"];
         });
       }
     });
@@ -128,6 +126,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     retrieveUserInfo();
   }
 
@@ -139,7 +138,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
         title: const Text(
           "User Profile",
           style: TextStyle(
-            color: Colors.pink,
+            color: Colors.white70,
           ),
         ),
         centerTitle: true,
@@ -183,6 +182,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
               : Container(),
         ],
       ),
+      backgroundColor: isWhite ? Colors.white : Colors.black,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -245,20 +245,20 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                 child: Text(
                   "Personal Info",
                   style: TextStyle(
-                    color: Colors.pink,
+                    color: Colors.white70,
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
               const Divider(
-                color: Colors.pink,
+                color: Colors.white70,
                 thickness: 2,
               ),
 
               //Personal Info Table Data
               Container(
-                color: Colors.black,
+                color: isWhite ? Colors.white : Colors.black,
                 padding: const EdgeInsets.all(20.0),
                 child: Table(
                   children: [
@@ -267,14 +267,14 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                       const Text(
                         "Name: ",
                         style: TextStyle(
-                          color: Colors.pink,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),
                       Text(
                         name,
                         style: const TextStyle(
-                          color: Colors.purple,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),
@@ -293,14 +293,14 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                       const Text(
                         "Age: ",
                         style: TextStyle(
-                          color: Colors.pink,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),
                       Text(
                         age,
                         style: const TextStyle(
-                          color: Colors.purple,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),
@@ -319,14 +319,14 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                       const Text(
                         "Phone Number: ",
                         style: TextStyle(
-                          color: Colors.pink,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),
                       Text(
                         phoneNo,
                         style: const TextStyle(
-                          color: Colors.purple,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),
@@ -345,14 +345,14 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                       const Text(
                         "City: ",
                         style: TextStyle(
-                          color: Colors.pink,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),
                       Text(
                         city,
                         style: const TextStyle(
-                          color: Colors.purple,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),
@@ -371,14 +371,14 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                       const Text(
                         "Country: ",
                         style: TextStyle(
-                          color: Colors.pink,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),
                       Text(
                         country,
                         style: const TextStyle(
-                          color: Colors.purple,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),
@@ -397,14 +397,14 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                       const Text(
                         "Profile Heading: ",
                         style: TextStyle(
-                          color: Colors.pink,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),
                       Text(
                         profileHeading,
                         style: const TextStyle(
-                          color: Colors.purple,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),
@@ -423,14 +423,14 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                       const Text(
                         "Seeking: ",
                         style: TextStyle(
-                          color: Colors.pink,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),
                       Text(
                         lookingForInaPartner,
                         style: const TextStyle(
-                          color: Colors.purple,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),
@@ -448,7 +448,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                 child: Text(
                   "Appearance",
                   style: TextStyle(
-                    color: Colors.pink,
+                    color: Colors.white70,
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                   ),
@@ -470,14 +470,14 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                       const Text(
                         "Height: ",
                         style: TextStyle(
-                          color: Colors.pink,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),
                       Text(
                         height,
                         style: const TextStyle(
-                          color: Colors.purple,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),
@@ -496,14 +496,14 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                       const Text(
                         "Weight: ",
                         style: TextStyle(
-                          color: Colors.pink,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),
                       Text(
                         weight,
                         style: const TextStyle(
-                          color: Colors.purple,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),
@@ -522,14 +522,14 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                       const Text(
                         "Body Type: ",
                         style: TextStyle(
-                          color: Colors.pink,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),
                       Text(
                         bodyType,
                         style: const TextStyle(
-                          color: Colors.purple,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),
@@ -547,7 +547,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                 child: Text(
                   "Lifestyle",
                   style: TextStyle(
-                    color: Colors.pink,
+                    color: Colors.white70,
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                   ),
@@ -569,14 +569,14 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                       const Text(
                         "Drink: ",
                         style: TextStyle(
-                          color: Colors.pink,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),
                       Text(
                         drink,
                         style: const TextStyle(
-                          color: Colors.purple,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),
@@ -595,14 +595,14 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                       const Text(
                         "Smoke: ",
                         style: TextStyle(
-                          color: Colors.pink,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),
                       Text(
                         smoke,
                         style: const TextStyle(
-                          color: Colors.purple,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),
@@ -621,14 +621,14 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                       const Text(
                         "Marital Status: ",
                         style: TextStyle(
-                          color: Colors.pink,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),
                       Text(
                         maritalStatus,
                         style: const TextStyle(
-                          color: Colors.purple,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),
@@ -647,14 +647,14 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                       const Text(
                         "Profession: ",
                         style: TextStyle(
-                          color: Colors.pink,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),
                       Text(
                         profession,
                         style: const TextStyle(
-                          color: Colors.purple,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),
@@ -680,7 +680,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                 child: Text(
                   "Background and Cultural Values",
                   style: TextStyle(
-                    color: Colors.pink,
+                    color: Colors.white70,
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                   ),
@@ -702,14 +702,14 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                       const Text(
                         "Nationality: ",
                         style: TextStyle(
-                          color: Colors.pink,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),
                       Text(
                         nationality,
                         style: const TextStyle(
-                          color: Colors.purple,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),
@@ -728,14 +728,14 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                       const Text(
                         "Education: ",
                         style: TextStyle(
-                          color: Colors.pink,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),
                       Text(
                         education,
                         style: const TextStyle(
-                          color: Colors.purple,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),
@@ -754,14 +754,14 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                       const Text(
                         "Language Spoken: ",
                         style: TextStyle(
-                          color: Colors.pink,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),
                       Text(
                         languageSpoken,
                         style: const TextStyle(
-                          color: Colors.purple,
+                          color: Colors.white70,
                           fontSize: 18,
                         ),
                       ),

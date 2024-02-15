@@ -10,7 +10,6 @@ import 'package:http/http.dart' as http;
 
 class ProfileController extends GetxController {
   final Rx<List<Person>> usersProfileList = Rx<List<Person>>([]);
-
   List<Person> get allUsersProfileList => usersProfileList.value;
 
   getResults() {
@@ -92,7 +91,6 @@ class ProfileController extends GetxController {
           .collection("favouriteSent")
           .doc(toUserID)
           .set({});
-
       //send notification
       sendNotificationToUser(toUserID, "Favourite", senderName);
     }

@@ -25,8 +25,8 @@ class _SwippingScreenState extends State<SwippingScreen> {
   ProfileController profileController = Get.put(ProfileController());
 
   String senderName = "";
-  String senderId = "";
-  String imageProfile = "";
+  // String senderId = "";
+  // String imageProfile = "";
   startChattingInWhatsApp(String receiverPhoneNumber) async {
     var androidUrl =
         "whatsapp://send?phone=$receiverPhoneNumber&text=Hi, I found your profile on dating app.";
@@ -186,8 +186,8 @@ class _SwippingScreenState extends State<SwippingScreen> {
         .then((dataSnapshot) {
       setState(() {
         senderName = dataSnapshot.data()!["name"].toString();
-        senderId = dataSnapshot.data()!["uid"].toString();
-        imageProfile = dataSnapshot.data()!["imageProfile"].toString();
+        // senderId = dataSnapshot.data()!["uid"].toString();
+        // imageProfile = dataSnapshot.data()!["imageProfile"].toString();
       });
     });
   }
@@ -196,7 +196,7 @@ class _SwippingScreenState extends State<SwippingScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    profileController.getResults();
     readCurrentUserData();
   }
 
@@ -296,7 +296,7 @@ class _SwippingScreenState extends State<SwippingScreen> {
                                         borderRadius: BorderRadius.circular(16),
                                       )),
                                   child: Text(
-                                    eachProfileInfo.profession.toString(),
+                                    eachProfileInfo.profileHeading.toString(),
                                     style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 14,
@@ -306,21 +306,21 @@ class _SwippingScreenState extends State<SwippingScreen> {
                                 const SizedBox(
                                   width: 4,
                                 ),
-                                ElevatedButton(
-                                  onPressed: () {},
-                                  style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.white30,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(16),
-                                      )),
-                                  child: Text(
-                                    eachProfileInfo.religion.toString(),
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                )
+                                // ElevatedButton(
+                                //   onPressed: () {},
+                                //   style: ElevatedButton.styleFrom(
+                                //       backgroundColor: Colors.white30,
+                                //       shape: RoundedRectangleBorder(
+                                //         borderRadius: BorderRadius.circular(16),
+                                //       )),
+                                //   child: Text(
+                                //     eachProfileInfo.religion.toString(),
+                                //     style: const TextStyle(
+                                //       color: Colors.white,
+                                //       fontSize: 14,
+                                //     ),
+                                //   ),
+                                // )
                               ],
                             ),
 
@@ -354,7 +354,7 @@ class _SwippingScreenState extends State<SwippingScreen> {
                                         borderRadius: BorderRadius.circular(16),
                                       )),
                                   child: Text(
-                                    eachProfileInfo.ethnicity.toString(),
+                                    eachProfileInfo.profession.toString(),
                                     style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 14,

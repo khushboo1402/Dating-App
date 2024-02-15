@@ -1,8 +1,10 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:siimple/global.dart';
 import 'package:siimple/homeScreen/home_screen.dart';
+import 'package:siimple/main.dart';
 import 'package:siimple/widgets/custom_text_field_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -25,9 +27,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
   double val = 0;
 
   //Personal Info
-  //
-  // TextEditingController emailTextEditingController = TextEditingController();
-  // TextEditingController passwordTextEditingController = TextEditingController();
+
   TextEditingController genderTextEditingController = TextEditingController();
   TextEditingController nameTextEditingController = TextEditingController();
   TextEditingController ageTextEditingController = TextEditingController();
@@ -49,31 +49,10 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
   TextEditingController smokeTextEditingController = TextEditingController();
   TextEditingController maritalStatusTextEditingController =
       TextEditingController();
-  TextEditingController haveChildrenTextEditingController =
-      TextEditingController();
-  TextEditingController noOfChildrenTextEditingController =
-      TextEditingController();
   TextEditingController professionTextEditingController =
       TextEditingController();
-  TextEditingController employmentStatusTextEditingController =
-      TextEditingController();
-  TextEditingController incomeTextEditingController = TextEditingController();
-  TextEditingController livingSituationTextEditingController =
-      TextEditingController();
-  TextEditingController willingToRelocateTextEditingController =
-      TextEditingController();
-  TextEditingController relationshipYouAreLookingForTextEditingController =
-      TextEditingController();
-
   //Background - Cultural Values
   TextEditingController nationalityTextEditingController =
-      TextEditingController();
-  TextEditingController educationTextEditingController =
-      TextEditingController();
-  TextEditingController languageSpokenTextEditingController =
-      TextEditingController();
-  TextEditingController religionTextEditingController = TextEditingController();
-  TextEditingController ethnicityTextEditingController =
       TextEditingController();
 
   //Personal Info
@@ -95,21 +74,11 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
   String drink = '';
   String smoke = '';
   String maritalStatus = '';
-  String haveChildren = '';
-  String noOfChildren = '';
+
   String profession = '';
-  String employmentStatus = '';
-  String income = '';
-  String livingSituation = '';
-  String willingToRelocate = '';
-  String relationshipYouAreLookingFor = '';
 
   //Background and Cultural Values
   String nationality = '';
-  String education = '';
-  String languageSpoken = '';
-  String religion = '';
-  String ethnicity = '';
 
   chooseImage() async {
     XFile? pickedFile =
@@ -192,88 +161,41 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
           maritalStatus = snapshot.data()!["maritalStatus"];
           maritalStatusTextEditingController.text = maritalStatus;
 
-          haveChildren = snapshot.data()!["haveChildren"];
-          haveChildrenTextEditingController.text = haveChildren;
-
-          noOfChildren = snapshot.data()!["noOfChildren"];
-          noOfChildrenTextEditingController.text = noOfChildren;
-
           profession = snapshot.data()!["profession"];
           professionTextEditingController.text = profession;
-
-          employmentStatus = snapshot.data()!["employmentStatus"];
-          employmentStatusTextEditingController.text = employmentStatus;
-
-          income = snapshot.data()!["income"];
-          incomeTextEditingController.text = income;
-
-          livingSituation = snapshot.data()!["livingSituation"];
-          livingSituationTextEditingController.text = livingSituation;
-
-          willingToRelocate = snapshot.data()!["willingToRelocate"];
-          willingToRelocateTextEditingController.text = willingToRelocate;
-
-          relationshipYouAreLookingFor =
-              snapshot.data()!["relationshipYouAreLookingFor"];
-          relationshipYouAreLookingForTextEditingController.text =
-              relationshipYouAreLookingFor;
 
           //Background and Cultural Values
           nationality = snapshot.data()!["nationality"];
           nationalityTextEditingController.text = nationality;
-
-          education = snapshot.data()!["education"];
-          educationTextEditingController.text = education;
-
-          languageSpoken = snapshot.data()!["languageSpoken"];
-          languageSpokenTextEditingController.text = languageSpoken;
-
-          religion = snapshot.data()!["religion"];
-          religionTextEditingController.text = religion;
-
-          ethnicity = snapshot.data()!["ethnicity"];
-          ethnicityTextEditingController.text = ethnicity;
         });
       }
     });
   }
 
   updateUserDataToFireStoreDatabase(
-    //Personal info
-    String name,
-    String age,
-    String gender,
-    String phoneNo,
-    String city,
-    String country,
-    String profileHeading,
-    String lookingForInaPartner,
+      //Personal info
+      String name,
+      String age,
+      String gender,
+      String phoneNo,
+      String city,
+      String country,
+      String profileHeading,
+      String lookingForInaPartner,
 
-    // Appearance
-    String height,
-    String weight,
-    String bodyType,
+      // Appearance
+      String height,
+      String weight,
+      String bodyType,
 
-    //Life Style
-    String drink,
-    String smoke,
-    String maritalStatus,
-    String haveChildren,
-    String noOfChildren,
-    String profession,
-    String employmentStatus,
-    String income,
-    String livingSituation,
-    String willingToRelocate,
-    String relationshipYouAreLookingFor,
+      //Life Style
+      String drink,
+      String smoke,
+      String maritalStatus,
+      String profession,
 
-    //Background and Cultural Values
-    String nationality,
-    String education,
-    String languageSpoken,
-    String religion,
-    String ethnicity,
-  ) async {
+      //Background and Cultural Values
+      String nationality) async {
     showDialog(
         context: context,
         builder: (context) {
@@ -319,28 +241,33 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
       'drink': drink,
       'smoke': smoke,
       'maritalStatus': maritalStatus,
-      'haveChildren': haveChildren,
-      'noOfChildren': noOfChildren,
+
       'profession': profession,
-      'employmentStatus': employmentStatus,
-      'income': income,
-      'livingSituation': livingSituation,
-      'willingToRelocate': willingToRelocate,
-      'relationshipYouAreLookingFor': relationshipYouAreLookingFor,
 
       //Background and Cultural Values
       'nationality': nationality,
-      'education': education,
-      'languageSpoken': languageSpoken,
-      'religion': religion,
-      'ethnicity': ethnicity,
+      // //images
 
-      //images
-      'urlImage1': urlsList[0].toString(),
-      'urlImage2': urlsList[1].toString(),
-      'urlImage3': urlsList[2].toString(),
-      'urlImage4': urlsList[3].toString(),
-      'urlImage5': urlsList[4].toString(),
+      'urlImage1':
+          urlsList.isNotEmpty && urlsList.length >= 1 && urlsList[0].isNotEmpty
+              ? urlsList[0].toString()
+              : "",
+      'urlImage2':
+          urlsList.isNotEmpty && urlsList.length >= 2 && urlsList[1].isNotEmpty
+              ? urlsList[1].toString()
+              : "",
+      'urlImage3':
+          urlsList.isNotEmpty && urlsList.length >= 3 && urlsList[2].isNotEmpty
+              ? urlsList[2].toString()
+              : "",
+      'urlImage4':
+          urlsList.isNotEmpty && urlsList.length >= 4 && urlsList[3].isNotEmpty
+              ? urlsList[3].toString()
+              : "",
+      'urlImage5':
+          urlsList.isNotEmpty && urlsList.length >= 5 && urlsList[4].isNotEmpty
+              ? urlsList[4].toString()
+              : "",
     });
 
     Get.snackbar("Updated", "Your account has been updated successfully. ");
@@ -364,9 +291,11 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: isWhite ? Colors.white : Colors.black,
       appBar: AppBar(
+        backgroundColor: isWhite ? Colors.white : Colors.black,
         title: Text(
-          next ? "Profile Information" : "Choose 5 Images",
+          next ? "Profile Information" : "Choose at the most 5 Images",
           style: const TextStyle(
             color: Colors.white,
             fontSize: 22,
@@ -377,13 +306,14 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
               ? Container()
               : IconButton(
                   onPressed: () {
-                    if (_image.length == 1) {
+                    if (_image.length <= 5) {
                       setState(() {
                         uploading = true;
                         next = true;
                       });
                     } else {
-                      Get.snackbar("Images", "Please choose atleast 1 Image");
+                      Get.snackbar(
+                          "Images", "Please choose at the most 5 Images");
                     }
                   },
                   icon: const Icon(
@@ -422,7 +352,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width -
                           36, //set as per the user screen size
-                      height: 55,
+                      height: 60,
                       child: CustomTextFieldWidget(
                         editingController: nameTextEditingController,
                         labelText: "Name",
@@ -439,7 +369,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width -
                           36, //set as per the user screen size
-                      height: 55,
+                      height: 60,
                       child: CustomTextFieldWidget(
                         editingController: ageTextEditingController,
                         labelText: "Age",
@@ -455,7 +385,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width -
                           36, //set as per the user screen size
-                      height: 55,
+                      height: 60,
                       child: CustomTextFieldWidget(
                         editingController: genderTextEditingController,
                         labelText: "Gender",
@@ -472,7 +402,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width -
                           36, //set as per the user screen size
-                      height: 55,
+                      height: 60,
                       child: CustomTextFieldWidget(
                         editingController: phoneNoTextEditingController,
                         labelText: "Phone",
@@ -489,7 +419,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width -
                           36, //set as per the user screen size
-                      height: 55,
+                      height: 60,
                       child: CustomTextFieldWidget(
                         editingController: cityTextEditingController,
                         labelText: "City",
@@ -506,7 +436,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width -
                           36, //set as per the user screen size
-                      height: 55,
+                      height: 60,
                       child: CustomTextFieldWidget(
                         editingController: countryTextEditingController,
                         labelText: "Country",
@@ -523,7 +453,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width -
                           36, //set as per the user screen size
-                      height: 55,
+                      height: 85,
                       child: CustomTextFieldWidget(
                         editingController: profileHeadingTextEditingController,
                         labelText: "Profile Heading",
@@ -540,7 +470,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width -
                           36, //set as per the user screen size
-                      height: 55,
+                      height: 60,
                       child: CustomTextFieldWidget(
                         editingController:
                             lookingForInaPartnerEditingController,
@@ -572,7 +502,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width -
                           36, //set as per the user screen size
-                      height: 55,
+                      height: 60,
                       child: CustomTextFieldWidget(
                         editingController: heightTextEditingController,
                         labelText: "Height",
@@ -589,7 +519,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width -
                           36, //set as per the user screen size
-                      height: 55,
+                      height: 60,
                       child: CustomTextFieldWidget(
                         editingController: weightTextEditingController,
                         labelText: "Weight",
@@ -606,7 +536,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width -
                           36, //set as per the user screen size
-                      height: 55,
+                      height: 60,
                       child: CustomTextFieldWidget(
                         editingController: bodyTypeTextEditingController,
                         labelText: "Body Type",
@@ -637,7 +567,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width -
                           36, //set as per the user screen size
-                      height: 55,
+                      height: 60,
                       child: CustomTextFieldWidget(
                         editingController: drinkTextEditingController,
                         labelText: "Drink",
@@ -654,7 +584,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width -
                           36, //set as per the user screen size
-                      height: 55,
+                      height: 60,
                       child: CustomTextFieldWidget(
                         editingController: smokeTextEditingController,
                         labelText: "Smoke",
@@ -671,7 +601,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width -
                           36, //set as per the user screen size
-                      height: 55,
+                      height: 60,
                       child: CustomTextFieldWidget(
                         editingController: maritalStatusTextEditingController,
                         labelText: "Marital Status",
@@ -684,138 +614,15 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                       height: 24,
                     ),
 
-                    //Have Children
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width -
-                          36, //set as per the user screen size
-                      height: 55,
-                      child: CustomTextFieldWidget(
-                        editingController: haveChildrenTextEditingController,
-                        labelText: "Do you have children?",
-                        iconData: CupertinoIcons.person_3_fill,
-                        isObscure: false,
-                      ),
-                    ),
-
-                    const SizedBox(
-                      height: 24,
-                    ),
-
-                    //No Of Children
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width -
-                          36, //set as per the user screen size
-                      height: 55,
-                      child: CustomTextFieldWidget(
-                        editingController: noOfChildrenTextEditingController,
-                        labelText: "Number of Children (if any)",
-                        iconData: CupertinoIcons.person_3_fill,
-                        isObscure: false,
-                      ),
-                    ),
-
-                    const SizedBox(
-                      height: 24,
-                    ),
-
                     //Profession
                     SizedBox(
                       width: MediaQuery.of(context).size.width -
                           36, //set as per the user screen size
-                      height: 55,
+                      height: 60,
                       child: CustomTextFieldWidget(
                         editingController: professionTextEditingController,
                         labelText: "Profession",
                         iconData: Icons.business_center,
-                        isObscure: false,
-                      ),
-                    ),
-
-                    const SizedBox(
-                      height: 24,
-                    ),
-
-                    //Employment Status
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width -
-                          36, //set as per the user screen size
-                      height: 55,
-                      child: CustomTextFieldWidget(
-                        editingController:
-                            employmentStatusTextEditingController,
-                        labelText: "Employment Status",
-                        iconData:
-                            CupertinoIcons.rectangle_stack_person_crop_fill,
-                        isObscure: false,
-                      ),
-                    ),
-
-                    const SizedBox(
-                      height: 24,
-                    ),
-
-                    //Income
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width -
-                          36, //set as per the user screen size
-                      height: 55,
-                      child: CustomTextFieldWidget(
-                        editingController: incomeTextEditingController,
-                        labelText: "Income",
-                        iconData: CupertinoIcons.money_dollar_circle,
-                        isObscure: false,
-                      ),
-                    ),
-
-                    const SizedBox(
-                      height: 24,
-                    ),
-
-                    //Living Situation
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width -
-                          36, //set as per the user screen size
-                      height: 55,
-                      child: CustomTextFieldWidget(
-                        editingController: livingSituationTextEditingController,
-                        labelText: "Living Situation",
-                        iconData: CupertinoIcons.person_2_square_stack,
-                        isObscure: false,
-                      ),
-                    ),
-
-                    const SizedBox(
-                      height: 24,
-                    ),
-
-                    //Willing To Relocate
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width -
-                          36, //set as per the user screen size
-                      height: 55,
-                      child: CustomTextFieldWidget(
-                        editingController:
-                            willingToRelocateTextEditingController,
-                        labelText: "Are you willing To Relocate?",
-                        iconData: CupertinoIcons.person_2,
-                        isObscure: false,
-                      ),
-                    ),
-
-                    const SizedBox(
-                      height: 24,
-                    ),
-
-                    //RelationshipYouAreLookingFor
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width -
-                          36, //set as per the user screen size
-                      height: 55,
-                      child: CustomTextFieldWidget(
-                        editingController:
-                            relationshipYouAreLookingForTextEditingController,
-                        labelText: "What relationship you are looking for?",
-                        iconData: CupertinoIcons.person_2,
                         isObscure: false,
                       ),
                     ),
@@ -842,7 +649,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width -
                           36, //set as per the user screen size
-                      height: 55,
+                      height: 60,
                       child: CustomTextFieldWidget(
                         editingController: nationalityTextEditingController,
                         labelText: "Nationality",
@@ -853,74 +660,6 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
 
                     const SizedBox(
                       height: 24,
-                    ),
-
-                    //education
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width -
-                          36, //set as per the user screen size
-                      height: 55,
-                      child: CustomTextFieldWidget(
-                        editingController: educationTextEditingController,
-                        labelText: "Education",
-                        iconData: Icons.history_edu,
-                        isObscure: false,
-                      ),
-                    ),
-
-                    const SizedBox(
-                      height: 24,
-                    ),
-
-                    //Language Spoken
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width -
-                          36, //set as per the user screen size
-                      height: 55,
-                      child: CustomTextFieldWidget(
-                        editingController: languageSpokenTextEditingController,
-                        labelText: "Language Spoken",
-                        iconData: CupertinoIcons.person_badge_plus_fill,
-                        isObscure: false,
-                      ),
-                    ),
-
-                    const SizedBox(
-                      height: 24,
-                    ),
-
-                    //Religion
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width -
-                          36, //set as per the user screen size
-                      height: 55,
-                      child: CustomTextFieldWidget(
-                        editingController: religionTextEditingController,
-                        labelText: "Religion",
-                        iconData: CupertinoIcons.checkmark_seal_fill,
-                        isObscure: false,
-                      ),
-                    ),
-
-                    const SizedBox(
-                      height: 24,
-                    ),
-
-                    //Ethnicity
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width -
-                          36, //set as per the user screen size
-                      height: 55,
-                      child: CustomTextFieldWidget(
-                        editingController: ethnicityTextEditingController,
-                        labelText: "Ethnicity",
-                        iconData: CupertinoIcons.eye,
-                        isObscure: false,
-                      ),
-                    ),
-
-                    const SizedBox(
-                      height: 30,
                     ),
 
                     //Create Account Button
@@ -981,46 +720,12 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                                   maritalStatusTextEditingController.text
                                       .trim()
                                       .isNotEmpty &&
-                                  haveChildrenTextEditingController.text
-                                      .trim()
-                                      .isNotEmpty &&
-                                  noOfChildrenTextEditingController.text
-                                      .trim()
-                                      .isNotEmpty &&
                                   professionTextEditingController.text
-                                      .trim()
-                                      .isNotEmpty &&
-                                  employmentStatusTextEditingController.text
-                                      .trim()
-                                      .isNotEmpty &&
-                                  incomeTextEditingController.text
-                                      .trim()
-                                      .isNotEmpty &&
-                                  livingSituationTextEditingController.text
-                                      .trim()
-                                      .isNotEmpty &&
-                                  willingToRelocateTextEditingController.text
-                                      .trim()
-                                      .isNotEmpty &&
-                                  relationshipYouAreLookingForTextEditingController
-                                      .text
                                       .trim()
                                       .isNotEmpty &&
 
                                   //Background and Cultural Values
                                   nationalityTextEditingController.text
-                                      .trim()
-                                      .isNotEmpty &&
-                                  educationTextEditingController.text
-                                      .trim()
-                                      .isNotEmpty &&
-                                  languageSpokenTextEditingController.text
-                                      .trim()
-                                      .isNotEmpty &&
-                                  religionTextEditingController.text
-                                      .trim()
-                                      .isNotEmpty &&
-                                  ethnicityTextEditingController.text
                                       .trim()
                                       .isNotEmpty) {
                             _image.length > 0
@@ -1047,30 +752,11 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                                     smokeTextEditingController.text.trim(),
                                     maritalStatusTextEditingController.text
                                         .trim(),
-                                    haveChildrenTextEditingController.text
-                                        .trim(),
-                                    noOfChildrenTextEditingController.text
-                                        .trim(),
                                     professionTextEditingController.text.trim(),
-                                    employmentStatusTextEditingController.text
-                                        .trim(),
-                                    incomeTextEditingController.text.trim(),
-                                    livingSituationTextEditingController.text
-                                        .trim(),
-                                    willingToRelocateTextEditingController.text
-                                        .trim(),
-                                    relationshipYouAreLookingForTextEditingController
-                                        .text
-                                        .trim(),
 
                                     //Background and Cultural Values
                                     nationalityTextEditingController.text
-                                        .trim(),
-                                    educationTextEditingController.text.trim(),
-                                    languageSpokenTextEditingController.text
-                                        .trim(),
-                                    religionTextEditingController.text.trim(),
-                                    ethnicityTextEditingController.text.trim())
+                                        .trim())
                                 : null;
                           } else {
                             Get.snackbar("A Field is Empty",
