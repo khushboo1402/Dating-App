@@ -18,36 +18,74 @@ class ProfileController extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
-    if (chosenGender == null || chosenCountry == null || chosenAge == null) {
-      usersProfileList.bindStream(FirebaseFirestore.instance
+
+    Stream<List<Person>> userStream;
+    if (chosenGender == 'None') chosenGender = null;
+    if (chosenCountry == 'None') chosenCountry = null;
+    if (chosenAge == 'None') chosenAge = null;
+    if (chosenGender == null && chosenCountry == null && chosenAge == null) {
+      userStream = FirebaseFirestore.instance
           .collection("Users")
           .where("uid", isNotEqualTo: FirebaseAuth.instance.currentUser!.uid)
           .snapshots()
           .map((QuerySnapshot queryDataSnapshot) {
-        List<Person> profileList = [];
-        for (var eachProfile in queryDataSnapshot.docs) {
-          profileList.add(Person.fromdataSnapshot((eachProfile)));
-        }
-        return profileList;
-      }));
+        return queryDataSnapshot.docs
+            .map((eachProfile) => Person.fromdataSnapshot(eachProfile))
+            .toList();
+      });
     } else {
-      usersProfileList.bindStream(FirebaseFirestore.instance
+      userStream = FirebaseFirestore.instance
           .collection("Users")
-          .where("gender", isEqualTo: chosenGender.toString().toLowerCase())
-          .where("country", isEqualTo: chosenCountry.toString())
-          .where("age", isEqualTo: int.parse(chosenAge.toString()))
+          .where("uid", isNotEqualTo: FirebaseAuth.instance.currentUser!.uid)
           .snapshots()
           .map((QuerySnapshot queryDataSnapshot) {
-        List<Person> profileList = [];
-        for (var eachProfile in queryDataSnapshot.docs) {
-          profileList.add(Person.fromdataSnapshot((eachProfile)));
-        }
-        return profileList;
-      }));
+        return queryDataSnapshot.docs
+            .map((eachProfile) => Person.fromdataSnapshot(eachProfile))
+            .where((person) {
+          return (person.gender?.toLowerCase() ==
+                  chosenGender?.toString().toLowerCase()) ||
+              (person.country == chosenCountry?.toString()) ||
+              (person.age! <= int.parse(chosenAge?.toString() ?? '0'));
+        }).toList();
+      });
     }
+
+    usersProfileList.bindStream(userStream);
   }
+
+  // @override
+  // void onInit() {
+  //   // TODO: implement onInit
+  //   super.onInit();
+  //   if (chosenGender == null || chosenCountry == null || chosenAge == null) {
+  //     usersProfileList.bindStream(FirebaseFirestore.instance
+  //         .collection("Users")
+  //         .where("uid", isNotEqualTo: FirebaseAuth.instance.currentUser!.uid)
+  //         .snapshots()
+  //         .map((QuerySnapshot queryDataSnapshot) {
+  //       List<Person> profileList = [];
+  //       for (var eachProfile in queryDataSnapshot.docs) {
+  //         profileList.add(Person.fromdataSnapshot((eachProfile)));
+  //       }
+  //       return profileList;
+  //     }));
+  //   } else {
+  //     usersProfileList.bindStream(FirebaseFirestore.instance
+  //         .collection("Users")
+  //         .where("gender", isEqualTo: chosenGender.toString().toLowerCase())
+  //         .where("country", isEqualTo: chosenCountry.toString())
+  //         .where("age", isEqualTo: int.parse(chosenAge.toString()))
+  //         .snapshots()
+  //         .map((QuerySnapshot queryDataSnapshot) {
+  //       List<Person> profileList = [];
+  //       for (var eachProfile in queryDataSnapshot.docs) {
+  //         profileList.add(Person.fromdataSnapshot((eachProfile)));
+  //       }
+  //       return profileList;
+  //     }));
+  //   }
+  // }
 
   favouriteSentAndFavouriteReceived(String toUserID, String senderName) async {
     var document = await FirebaseFirestore.instance
@@ -91,6 +129,7 @@ class ProfileController extends GetxController {
           .collection("favouriteSent")
           .doc(toUserID)
           .set({});
+
       //send notification
       sendNotificationToUser(toUserID, "Favourite", senderName);
     }

@@ -308,7 +308,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               SizedBox(
                 width: MediaQuery.of(context).size.width -
                     36, //set as per the user screen size
-                height: 55,
+                height: 85,
                 child: CustomTextFieldWidget(
                   editingController: profileHeadingTextEditingController,
                   labelText: "Profile Heading",

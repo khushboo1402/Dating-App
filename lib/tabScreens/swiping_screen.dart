@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:siimple/allScreens/chat_page.dart';
 import 'package:siimple/controllers/profile_controller.dart';
 import 'package:siimple/global.dart';
@@ -73,7 +74,7 @@ class _SwippingScreenState extends State<SwippingScreen> {
                       hint: const Text('Select gender'),
                       value: chosenGender,
                       underline: Container(),
-                      items: ["Male", "Female", "Others"].map((value) {
+                      items: ["Male", "Female", "Others", "None"].map((value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(
@@ -106,7 +107,8 @@ class _SwippingScreenState extends State<SwippingScreen> {
                         "United Kingdom",
                         "Canada",
                         "United States",
-                        "India"
+                        "India",
+                        "None"
                       ].map((value) {
                         return DropdownMenuItem<String>(
                           value: value,
@@ -143,6 +145,7 @@ class _SwippingScreenState extends State<SwippingScreen> {
                         '45',
                         '50',
                         '55',
+                        'None'
                       ].map((value) {
                         return DropdownMenuItem<String>(
                           value: value,
@@ -261,7 +264,7 @@ class _SwippingScreenState extends State<SwippingScreen> {
                             Text(
                               eachProfileInfo.name.toString(),
                               style: const TextStyle(
-                                color: Colors.white,
+                                color: Colors.pink,
                                 fontSize: 24,
                                 letterSpacing: 3,
                                 fontWeight: FontWeight.bold,
@@ -274,7 +277,7 @@ class _SwippingScreenState extends State<SwippingScreen> {
                                   " ○ " +
                                   eachProfileInfo.city.toString(),
                               style: const TextStyle(
-                                color: Colors.white,
+                                color: Colors.pink,
                                 fontSize: 14,
                                 letterSpacing: 4,
                               ),
@@ -298,7 +301,7 @@ class _SwippingScreenState extends State<SwippingScreen> {
                                   child: Text(
                                     eachProfileInfo.profileHeading.toString(),
                                     style: const TextStyle(
-                                      color: Colors.white,
+                                      color: Colors.pinkAccent,
                                       fontSize: 14,
                                     ),
                                   ),
@@ -338,7 +341,7 @@ class _SwippingScreenState extends State<SwippingScreen> {
                                   child: Text(
                                     eachProfileInfo.country.toString(),
                                     style: const TextStyle(
-                                      color: Colors.white,
+                                      color: Colors.pinkAccent,
                                       fontSize: 14,
                                     ),
                                   ),
@@ -356,7 +359,7 @@ class _SwippingScreenState extends State<SwippingScreen> {
                                   child: Text(
                                     eachProfileInfo.profession.toString(),
                                     style: const TextStyle(
-                                      color: Colors.white,
+                                      color: Colors.pink,
                                       fontSize: 14,
                                     ),
                                   ),
