@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:siimple/global.dart';
 import 'package:siimple/models/person.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -19,73 +21,115 @@ class ProfileController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    // usersProfileLi/st.value = [];
+    Stream<List<Person>>? userStream;
+    checkFilterNull();
 
-    Stream<List<Person>> userStream;
+    if (chosenGender == null && chosenCountry == null && chosenAge == null) {
+      retrieveAllUsers(userStream);
+    } else {
+      retrieveFilterUsers(userStream);
+      // usersProfileList.bindStream(userStream!);
+    }
+  }
+
+  void checkFilterNull() {
     if (chosenGender == 'None') chosenGender = null;
     if (chosenCountry == 'None') chosenCountry = null;
     if (chosenAge == 'None') chosenAge = null;
-    if (chosenGender == null && chosenCountry == null && chosenAge == null) {
-      userStream = FirebaseFirestore.instance
-          .collection("Users")
-          .where("uid", isNotEqualTo: FirebaseAuth.instance.currentUser!.uid)
-          .snapshots()
-          .map((QuerySnapshot queryDataSnapshot) {
-        return queryDataSnapshot.docs
-            .map((eachProfile) => Person.fromdataSnapshot(eachProfile))
-            .toList();
-      });
-    } else {
-      userStream = FirebaseFirestore.instance
-          .collection("Users")
-          .where("uid", isNotEqualTo: FirebaseAuth.instance.currentUser!.uid)
-          .snapshots()
-          .map((QuerySnapshot queryDataSnapshot) {
-        return queryDataSnapshot.docs
-            .map((eachProfile) => Person.fromdataSnapshot(eachProfile))
-            .where((person) {
-          return (person.gender?.toLowerCase() ==
-                  chosenGender?.toString().toLowerCase()) ||
-              (person.country == chosenCountry?.toString()) ||
-              (person.age! <= int.parse(chosenAge?.toString() ?? '0'));
-        }).toList();
-      });
-    }
-
-    usersProfileList.bindStream(userStream);
   }
 
-  // @override
-  // void onInit() {
-  //   // TODO: implement onInit
-  //   super.onInit();
-  //   if (chosenGender == null || chosenCountry == null || chosenAge == null) {
-  //     usersProfileList.bindStream(FirebaseFirestore.instance
-  //         .collection("Users")
-  //         .where("uid", isNotEqualTo: FirebaseAuth.instance.currentUser!.uid)
-  //         .snapshots()
-  //         .map((QuerySnapshot queryDataSnapshot) {
-  //       List<Person> profileList = [];
-  //       for (var eachProfile in queryDataSnapshot.docs) {
-  //         profileList.add(Person.fromdataSnapshot((eachProfile)));
-  //       }
-  //       return profileList;
-  //     }));
-  //   } else {
-  //     usersProfileList.bindStream(FirebaseFirestore.instance
-  //         .collection("Users")
-  //         .where("gender", isEqualTo: chosenGender.toString().toLowerCase())
-  //         .where("country", isEqualTo: chosenCountry.toString())
-  //         .where("age", isEqualTo: int.parse(chosenAge.toString()))
-  //         .snapshots()
-  //         .map((QuerySnapshot queryDataSnapshot) {
-  //       List<Person> profileList = [];
-  //       for (var eachProfile in queryDataSnapshot.docs) {
-  //         profileList.add(Person.fromdataSnapshot((eachProfile)));
-  //       }
-  //       return profileList;
-  //     }));
-  //   }
-  // }
+  void retrieveAllIfNoDataFound(
+      Stream<List<Person>>? userStream, Rx<List<Person>> usersProfileList) {
+    retrieveAllUsers(userStream);
+    displayMessage();
+  }
+
+  void displayMessage() {
+    Get.snackbar(
+      "Not found!!",
+      "",
+      titleText: const Text(
+        "Looks like all the good fish have been caught (Try again with a different search)",
+        style: TextStyle(color: Colors.blue), // Your desired color
+      ),
+    );
+  }
+
+  retrieveFilterUsers(Stream<List<Person>>? userStream) {
+    userStream = FirebaseFirestore.instance
+        .collection("Users")
+        .where("uid", isNotEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .snapshots()
+        .map((QuerySnapshot queryDataSnapshot) {
+      // return queryDataSnapshot.docs
+      final filteredList = queryDataSnapshot.docs
+          .map((eachProfile) => Person.fromdataSnapshot(eachProfile))
+          .where((person) {
+        // Ensure null checks and type conversions:
+        final genderMatch = chosenGender != null &&
+            person.gender?.toLowerCase() == chosenGender?.toLowerCase();
+        final countryMatch =
+            chosenCountry != null && person.country == chosenCountry;
+        final ageMatch = chosenAge != null &&
+            int.tryParse(chosenAge!) != null &&
+            person.age! <= int.parse(chosenAge!);
+        print("====================================");
+        print("Record : NAME - " + person.name!.toLowerCase());
+        print("Record : Gender - " + person.gender!.toLowerCase());
+        print("Record : Country - " + person.country!);
+        print("Record : Age - " + person.age!.toString());
+
+        print("Match : genderMatch - " + genderMatch.toString());
+        print("Match : countryMatch - " + countryMatch.toString());
+        print("Match : ageMatch - " + ageMatch.toString());
+        print("====================================");
+
+        // Combine filters dynamically:
+        return filterRecordsDynamically(
+            ageMatch, countryMatch, genderMatch); // Include all if no filters
+      }).toList();
+      if (filteredList.isEmpty) {
+        retrieveAllIfNoDataFound(userStream, usersProfileList);
+      }
+      return filteredList; // Return the filtered list
+    });
+
+    usersProfileList.bindStream(userStream!);
+    // return userStream;
+  }
+
+  bool filterRecordsDynamically(
+      bool ageMatch, bool countryMatch, bool genderMatch) {
+    return (chosenAge != null && chosenCountry != null && chosenGender != null)
+        ? ageMatch && countryMatch && genderMatch
+        : (chosenAge != null && chosenCountry != null)
+            ? ageMatch && countryMatch
+            : (chosenCountry != null && chosenGender != null)
+                ? countryMatch && genderMatch
+                : (chosenAge != null && chosenGender != null)
+                    ? ageMatch && genderMatch
+                    : (chosenAge != null)
+                        ? ageMatch
+                        : (chosenCountry != null)
+                            ? countryMatch
+                            : (chosenGender != null)
+                                ? genderMatch
+                                : true;
+  }
+
+  retrieveAllUsers(Stream<List<Person>>? userStream) {
+    userStream = FirebaseFirestore.instance
+        .collection("Users")
+        .where("uid", isNotEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .snapshots()
+        .map((QuerySnapshot queryDataSnapshot) {
+      return queryDataSnapshot.docs
+          .map((eachProfile) => Person.fromdataSnapshot(eachProfile))
+          .toList();
+    });
+    usersProfileList.bindStream(userStream!);
+  }
 
   favouriteSentAndFavouriteReceived(String toUserID, String senderName) async {
     var document = await FirebaseFirestore.instance

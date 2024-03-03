@@ -27,7 +27,7 @@ void main() async {
       options: const FirebaseOptions(
     apiKey: "AIzaSyCzzmw2sP99qegNLqPB6Rs3I66ks25_XyE",
     // paste your api key here
-    appId: "1:833397462294:android:a02864b0adffc12402ec37  ",
+    appId: "1:833397462294:android:a02864b0adffc12402ec37",
     //paste your app id here
     messagingSenderId: "833397462294",
     //paste your messagingSenderId here
